@@ -1,0 +1,162 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+@{
+    int catId;
+}
+
+<div class="" style="background-color:white;padding-top:10px">
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <form class="form-horizontal" id="frmOrder" asp-controller="product" asp-action="category" asp-route-categoryId="@(ViewBag.Category!=null? ViewBag.Category.Id:"" )">
+                <div class="control-group">
+                    <label style="" class="control-label col-lg-4 pull-right">مرتب سازی   </label>
+
+                    <select id="optOrder" name="order" class="col-lg-8 form-control">
+                        <option value="1" selected="@(ViewBag.Order==1)"> حروف الفبا صعودی</option>
+                        <option value="2" selected="@(ViewBag.Order==2)"> حروف الفبا نزولی</option>
+                        <option value="3" selected="@(ViewBag.Order==3)">جدیدترین  محصولات(پیشفرض)</option>
+                        <option value="4" selected="@(ViewBag.Order==4)">قیمت صعودی</option>
+                        <option value="5" selected="@(ViewBag.Order==5)">قیمت نزولی</option>
+                        <option value="6" selected="@(ViewBag.Order==6)">محبوبیت</option>
+
+                    </select>
+
+                </div>
+            </form>
+
+        </div>
+
+        <div style="margin-right: -20px;" class="col-lg-6">
+            <h5 >
+                @if (ViewBag.Category != null)
+                {
+                    @ViewBag.Category.Name;
+                    catId = ViewBag.Category.Id;
+                }
+                <small class=""> @ViewBag.CountProduct محصول </small>
+            </h5>
+        </div>
+    </div>
+
+
+    <hr class="soft" />
+
+
+
+
+
+
+    @*<div id="myTab" class="pull-right">
+            <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
+            <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
+        </div>*@
+
+    <br class="clr" />
+
+
+    @*<div class="tab-pane" id="listView">
+
+            @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
+            {
+                var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
+
+
+                    <a asp-action="details" asp-route-id="@product.Id" asp-controller="product">
+
+                        <div class="col-lg-2">
+                            <img src="~/products/@image" alt="" />
+                        </div>
+                        <div class="span4">
+
+                            <h4>@product.Name </h4>
+                            <p>
+                                    @product.Description
+                                </p>
+                            <br class="clr" />
+                        </div>
+                    </a>
+                    <div class="col-lg-3 alignR">
+                        <form class="form-horizontal qtyFrm">
+                            <h3>@product.Price.ToString("#,##") ریال</h3>
+                            <label class="checkbox">
+                                    <input type="checkbox">  اضافه به مقایسه
+                                </label><br />
+
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-large btn-success"> خرید <i class=" icon-shopping-cart"></i></a>
+
+                        </form>
+                    </div>
+                <hr class="soft" />
+            }
+        </div>*@
+
+    <div class="tab-pane  active" id="blockView">
+        <div class="row" style="list-style:none; margin-left: 10px; margin-right: 10px;">
+
+            @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
+            {
+                var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
+
+                <div class="col-lg-3 box" style="height:330px;border:0.2px solid #808080;">
+                    <div class="thumbnail">
+                        <a asp-action="details" asp-route-id="@product.Id" asp-controller="product">
+                            <img src="~/products/@image" style="width:240px;height:190px" alt="" />
+                        </a>
+                        <div class="caption" style="padding-top:10px;height:70px;">
+                            <h5 style="height:50px">@product.Name</h5>
+                            @*<p>
+                                    @product.Description
+                                </p>*@
+                            <h4 style="text-align:center" style="padding-top:10px;">
+                                @*<a class="btn" href="product_details.html">
+                                        <i class="icon-zoom-in"></i>
+                                    </a>*@
+                                <a class="btn btn-success" asp-controller="cart" asp-action="buy" asp-route-id="@product.Id">
+                                    <i class="fa fa-shopping-cart"></i>خرید
+
+                                </a>
+                                <a class="btn btn-danger" href="#">@product.Price.ToString("#,##")</a>
+                            </h4>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <hr class="soft" />
+    </div>
+
+
+
+    @*<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>*@
+<div class="row" style="justify-content: center;">
+    @if (ViewBag.Category != null)
+    {
+        @Html.PagedListPager((IPagedList)ViewBag.Products, page => Url.Action("category", "product", new { page = page, categoryId = ViewBag.Category.Id }))
+    }
+    else
+    {
+        @Html.PagedListPager((IPagedList)ViewBag.Products, page => Url.Action("category", "product", new { page = page }))
+
+    }
+
+</div>
+
+</div>
+<br class="clr" />
+<script src="~/user/themes/js/jquery.js"></script>
+<script>
+    $("#optOrder").change(function () {
+        $("#frmOrder").submit();
+
+    });
+</script>

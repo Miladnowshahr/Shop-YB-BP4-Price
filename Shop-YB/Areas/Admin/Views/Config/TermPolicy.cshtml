@@ -1,0 +1,21 @@
+﻿@model ShopYB.Models.Config
+
+@{
+    ViewData["Title"] = "TermPolicy";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>TermPolicy</h2>
+
+<div>
+    <h4>Term & Policy</h4>
+    <hr />
+    <div class="form-group">
+        <label for="title"> Term & Policy</label>
+        <textarea class="form-control" rows="10" id="terms" asp-for="TermPolicy"></textarea>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

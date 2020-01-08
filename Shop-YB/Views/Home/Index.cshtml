@@ -1,0 +1,397 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+
+}
+@using ShopYB.Models
+
+
+<script src="~/user/themes/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+
+
+
+
+<div class="box effect8">
+    <div class="row">
+        <div class="box-header">
+            <h2>پیشنهاد گیل‌شرق</h2>
+        </div>
+    </div>
+    <div class="box-body">
+
+        <div class="container-fluid" dir="ltr">
+
+            <div id="featureProduct" class="owl-carousel owl-theme card-deck">
+                @{
+
+                    var products = (IEnumerable<Product>)ViewBag.FeaturedProduct;
+                    foreach (var product in products)
+                    {
+                        var price = product.ProductPrices.FirstOrDefault(x => x.IsActive && x.ProductId == product.Id).BasePrice;
+                        var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+                        <div class="card text-center car" style="height:320px;">
+                            <a asp-controller="product" asp-action="details" asp-route-id="@product.Id">
+                                <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title small" style="height:40px">@product.Name</h5>
+                                <p class="card-text " style="color:#c13260;" dir="rtl">
+                                    @price.ToString("#,##")<span>  ریال </span>
+                                </p>
+                            </div>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-danger">
+                                افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                    }
+
+                }
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+@if (ViewBag.Discount.Count != 0)
+{
+    <div class="box effect8">
+        <div class="row">
+            <div class="box-header">
+                <h2>تخفیف ترین ها</h2>
+            </div>
+        </div>
+        <div class="box-body" style="padding-bottom:10px">
+
+            <div class="container-fluid" dir="ltr">
+
+                <div id="discountProduct" class="owl-carousel owl-theme card-deck">
+                    @{
+                        var i = 0;
+                        var discount = (IEnumerable<ShowDPViewModel>)ViewBag.Discount;
+                        foreach (var item in discount)
+                        {
+
+                            var image = item.product.Photos.SingleOrDefault(x => x.Featured).Name;
+                            <div onload="countdown(@item.ExprireDate)" class="card text-center car" style="height:400px;">
+                                <ul class="tags">
+                                    <li><a href="#">%@item.DiscountValue</a></li>
+                                </ul>
+                                <a asp-controller="product" asp-action="details" asp-route-id="@item.product.Id">
+
+                                    <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title small" style="height:40px">@item.product.Name</h5>
+                                    <p class="card-text " style="color:#808080;" dir="rtl">
+                                        @item.Price.ToString("#,##")<span>  ریال </span>
+                                    </p>
+                                    <p class="card-text " style="color:#c13260;" dir="rtl">
+                                        @item.NewPrice.ToString("#,##")<span>  ریال </span>
+                                    </p>
+                                </div>
+                                <p id="date" hidden="hidden">@item.ExprireDate</p>
+
+                                <p id="timer_@i" class="timer" data-element="timer_@i" data-time="@item.ExprireDate" style="font-size:small;direction:rtl"></p>
+                                <a asp-controller="cart" asp-action="buy" asp-route-id="@item.product.Id" class="btn btn-outline-danger">
+                                    افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                                </a>
+
+                            </div>
+                            i++;
+
+                        }
+
+                    }
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+}
+
+<div class="box effect8">
+    <div class="row">
+        <div class="box-header mr-2">
+            <h2>جدیدترین محصولات</h2>
+
+        </div>
+    </div>
+
+    <div class="box-body">
+        <div class="container-fluid" dir="ltr">
+
+            <div id="latest-carousel" class="owl-carousel owl-theme card-deck">
+                @{
+                    var latestProduct = (IEnumerable<Product>)ViewBag.LatestProducts;
+
+                    foreach (var product in products)
+                    {
+                        var price = product.ProductPrices.FirstOrDefault(x => x.IsActive && x.ProductId == product.Id).BasePrice;
+                        var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+                        <div class="card text-center car2" style="height:320px;">
+                            <a asp-controller="product" asp-action="details" asp-route-id="@product.Id">
+                                <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title small" style="height:40px">@product.Name</h5>
+                                <p class="card-text btn-outline-success btn" dir="rtl">
+                                    @price.ToString("#,##")<span>  ریال </span>
+                                </p>
+                            </div>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-danger">
+                                افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                    }
+
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="box effect8">
+    <div class="row">
+        <div class="box-header">
+            <h2>پر فروش‌ترین</h2>
+        </div>
+    </div>
+
+    <div class="box-body">
+
+        <div class="container-fluid" dir="ltr">
+
+            <div id="mostSales-carousel" class="owl-carousel owl-theme card-deck">
+                @{
+                    var mostSales = (IEnumerable<Product>)ViewBag.MaxSales;
+
+                    foreach (var product in mostSales)
+                    {
+                        var price = product.ProductPrices.FirstOrDefault(x => x.IsActive && x.ProductId == product.Id).BasePrice;
+                        var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+                        <div class="card text-center" style="height:320px;">
+                            <a asp-controller="product" asp-action="details" asp-route-id="@product.Id">
+                                <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title small" style="height:40px">@product.Name</h5>
+                                <p class="card-text btn-outline-success btn" dir="rtl">
+                                    @price.ToString("#,##")<span>  ریال </span>
+                                </p>
+                            </div>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-primary">
+                                افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                    }
+
+                }
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="box effect8">
+    <div class="row">
+        <div class="box-header">
+            <h2>پیشنهاد ویژه</h2>
+        </div>
+    </div>
+    <div class="box-body">
+
+        <div class="container-fluid" dir="ltr">
+            <div id="promote-carousel" class="owl-carousel owl-theme card-deck">
+                @{
+                    var mostDiscount = (IEnumerable<Product>)ViewBag.MaxSales;
+
+                    foreach (var product in mostDiscount)
+                    {
+                        var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+                        <div class="card text-center" style="height:320px;">
+                            <a asp-controller="product" asp-action="details" asp-route-id="@product.Id">
+                                <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title small" style="height:40px">@product.Name</h5>
+                                <p class="card-text btn-outline-success btn" dir="rtl">
+                                    @product.Price.ToString("#,##")<span>  ریال </span>
+                                </p>
+                            </div>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-primary">
+                                افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                    }
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div style="padding-bottom:100px;"></div>
+<!-- Top content -->
+<script>
+    $("#discountProduct").owlCarousel({
+        loop: false,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+
+    $('#featureProduct').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+
+
+
+
+    $('#mostSales-carousel').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+
+
+
+    $('#latest-carousel').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+
+
+
+
+    $('#promote-carousel').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+    var date = document.getElementById("date");
+
+
+    $(".timer").each(function () {
+        var time = this.getAttribute("data-time");
+        var target = this.getAttribute("data-element");
+        countdown(time, target);
+        console.log(time);
+    })
+
+
+    function countdown(finish_date, target) {
+
+        var x = setInterval(function () {
+            var end = new Date(finish_date).getTime();
+
+            var now = new Date().getTime();
+
+            var distance = end - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            $("#" + target).html(days + "  روز  " + hours + "  ساعت  " + minutes + "  دقیقه  " + seconds + " ثانیه  ");
+
+
+            if (distance < 0) {
+                clearInterval(x);
+                timer.innerHTML = "ICO Has Ended";
+            }
+        }, 1000);
+    }
+</script>

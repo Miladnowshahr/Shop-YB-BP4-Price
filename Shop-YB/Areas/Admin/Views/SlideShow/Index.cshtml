@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        SlideShow List
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">SlideShow</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="slideshowTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Photo</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var slideshow in ViewBag.slideshows)
+                            {
+                                <tr>
+                                    <td>@slideshow.Id</td>
+                                    <td>
+                                        <img src="~/SlideShows/@slideshow.Name" width="120" />
+                                    </td>
+                                    <td>
+                                        @slideshow.Title
+                                    </td>
+                                    <td>
+                                        @slideshow.Description
+                                    </td>
+                                    <td>@(slideshow.Status ? "Show" : "Hide")</td>
+                                    <td>
+                                        <a asp-area="admin" asp-controller="slideshow" asp-action="edit"
+                                           asp-route-id="@slideshow.Id">Edit</a>
+                                        <span>|</span>
+
+                                        <a asp-area="admin" asp-controller="slideshow" asp-action="delete"
+                                           asp-route-id="@slideshow.Id" onclick="return confirm('Are you sure?')"> Delete</a>
+
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <!-- /.box -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+@section script{
+    <script>
+        $(function () {
+
+            $('#slideshowTable').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
+        })
+    </script>
+
+
+
+}

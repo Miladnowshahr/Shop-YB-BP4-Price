@@ -1,0 +1,279 @@
+﻿@model ShopYB.Models.CheckoutViewModel
+@{
+    ViewData["Title"] = "Shipping";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var total = ViewBag.TotalPrice;
+
+}
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" reتl="stylesheet" />
+
+
+<div style="background-color:white" dir="rtl">
+
+
+    <div class="box" style="box-shadow:0px 0px">
+        <div class="row">
+            <div class="box-header">
+                <h3> انتخاب آدرس</h3>
+            </div>
+            <a href="#myModal" id="myBtn" data-toggle="modal" data-target="#myModal">آدرس جدید</a>
+
+        </div>
+    </div>
+
+    <div class="modal fade" style="direction:rtl; text-align:justify" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:20px 10px; display:block">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="modalh4"><span class="fa fa-address-book"></span> آدرس جدید</h4>
+                </div>
+                <div class="modal-body" style="padding:10px 30px;">
+
+                    <form id="frmAddAddress">
+                        <input type="hidden" name="accountId" value="@ViewBag.CustomerId" />
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="name"><span class="fa fa-user-plus"></span>  نام و نام‌خانوادگی</label>
+                                    <input type="text" class="form-control" name="name" required="required" placeholder="نام و نام‌خانوادگی">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="phone"><span class="fa fa-mobile-phone"></span> شماره تماس</label>
+                                    <input type="number" class="form-control" id="phone" required="required" name="phone" placeholder="Enter Phone">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="state"><span class="fa fa-address-card"></span> استان</label>
+                                <input type="text" class="form-control" id="state" required="required" name="state" placeholder="استان">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="city"><span class="fa fa-address-card"></span> شهر</label>
+                                    <input type="text" class="form-control" id="city" required="required" name="city" placeholder="شهر">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="Address"><span class="fa fa-address-book"></span> آدرس</label>
+                                    <textarea rows="3" class="form-control" id="Address" required="required" name="address1" placeholder="آدرس"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="zipCode"><span class="glyphicon glyphicon-eye-open"></span> کد پستی</label>
+                                    <input type="number" class="form-control" id="zipCode" required="required" name="zipCode" placeholder="کدپستی">
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" id="saveBtn" class="btn btn-info pull-right"><span class="fa fa-save"></span> Save</button>
+
+                    </form>
+
+                </div>
+                @*<div class="modal-footer">
+                        <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <form id="payForm" method="post" asp-controller="cart" asp-action="payment">
+
+        <hr class="soft" />
+        <div class="row address" dir="rtl">
+            @foreach (var address in (IEnumerable<ShopYB.Models.Address>)ViewBag.Address)
+            {
+
+                <div class="col-lg-3 addressitem">
+                    <label>
+                        <input type="radio" id="radioInput_@address.Id" name="id" class="card-input-element"  required="required" value="@address.Id" asp-for="Id" />
+                        
+                        <div class="panel panel-danger card-input" style="text-align:justify">
+                            <div class="panel-heading btn btn-success" style="width:100%">نام: @address.Name</div>
+                            <div class="panel-body">
+                                <address>
+                                    @address.State-@address.City<br>
+                                    @address.Address1<br>
+                                    <abbr title="کدپستی">کد پستی:</abbr> @address.Zipcode <br />
+                                    <abbr title="شماره تماس">شماره تلفن:</abbr> @address.Phone
+                                </address>
+                            </div>
+                        </div>
+                    </label>
+                    @*<address>
+                        <strong>FullName: @address.Name</strong><br>
+                        @address.State-@address.City<br>
+                        @address.Address1<br>
+                        <abbr title="Phone">ZipCode:</abbr> @address.ZipCode <br />
+                        <abbr title="Phone">Phone:</abbr> @address.Phone
+                    </address>*@
+                </div>
+
+            }
+        </div>
+
+        <hr class="soft" />
+
+        <div class="box" style="box-shadow:0px 0px">
+            <div class="row">
+                <div class="box-header">
+                    <h3> لیست سفارش</h3>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div class="box-body">
+            <div class="container-fluid pull-left" dir="ltr" >
+                <div id="featureProduct" class="owl-carousel owl-theme card-deck">
+
+                    @foreach (var invoice in (IEnumerable<ShopYB.Models.Item>)ViewBag.Invoice)
+                    {
+                        <div class="card text-center car" style="height:250px;border:0px">
+                            <ul class="tags">
+                                <li><a href="#">@invoice.Quantity</a></li>
+                                
+                            </ul>
+                              
+                            
+                            <a href="@Url.Action("detail","product",new { id = invoice.Product })">
+                                <img src="~/products/@invoice.PhotoName" class="card-img-top" style="border-radius:5%" height="120px" width="auto" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <div class="caption">
+                                    <h5>@invoice.Product.Name</h5>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    }
+
+
+
+
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+            <hr class="soft" />
+
+
+            <br />
+
+
+            <input type="hidden" name="totalPrice" value="@total" />
+            <input class="btn btn-info btn-large" id="nextStep" type="submit" style="margin:10px" value="مرحله بعدی" />
+
+    </form>
+</div>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="~/user/themes/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+<script>
+    //$(document).ready(function () {
+    //    //$("#myBtn").click(function () {
+    //    //    $("#myModal").modal();
+    //    //                    });
+    //    //                });
+
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        location.reload();
+    });
+
+
+    $("#frmAddAddress").submit(function (e) {
+
+        e.preventDefault();
+        var form = $(this);
+       
+
+         $.ajax({
+
+             url: "@Url.Action("AddAddress","customer")",
+             type: "POST",
+             data: form.serialize(),
+             success: function (data) {
+
+                 location.reload(true);
+             }
+         });
+
+    });
+
+      $('#btnContinue').click(function () {
+          var id = $('input[name=id]:checked').val();
+          if (id == "0") {
+              alert("Select Address");
+          }
+          else {
+              var total1 = $('#total').html();
+              $.post("/cart/payment", { id: id, totalPrice: total1 });
+          }
+      });
+
+
+      $('#featureProduct').owlCarousel({
+        loop: false,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+      });
+
+
+    $("#nextStep").click(function (e) {
+        e.preventDefault();
+        var next = $("input[type='radio']:checked");
+
+        if (next.length == 0) {
+            alert("لطفا آدرس را انتخاب کنید");
+            return false;
+        }
+        
+            $("#payForm").submit();
+        
+    });
+       
+    
+</script>

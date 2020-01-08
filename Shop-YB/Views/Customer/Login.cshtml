@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model ShopYB.Models.LoginViewModel
+
+
+    <div class="" style="background-color:white;text-align:justify;padding:10px 20px">
+
+        <div class="box" style="box-shadow:0px 0px">
+            <div class="row">
+                <div class="box-header">
+                    <h3> ورود</h3>
+                </div>
+
+            </div>
+        </div>
+        <div class="well">
+            @if (ViewBag.error != null)
+            {
+                <div class="alert alert-error">
+                    <p class="text-danger">
+                        @ViewBag.error
+                    </p>
+                </div>
+            }
+            <form class="form-horizontal" asp-controller="customer" asp-action="login" method="get">
+                <h4>اطلاعات حساب کاربری</h4>
+                
+                <div class="control-group row" style="padding:10px">
+                    <label class="control-label col-md-2" for="username">نام کاربری <sup>*</sup></label>
+                    <div class="controls">
+                        <input type="text" class="form-control col-md-10"asp-for="UserName" required="required" placeholder="نام کاربری">
+                    </div>
+                </div>
+                <div class="control-group row"  style="padding:10px">
+                    <label class="control-label col-md-2" for="inputPassword1">رمز عبور <sup>*</sup></label>
+                    <div class="controls">
+                        <input type="password" class="form-control col-md-10" asp-for="Password" required="required" placeholder="رمز عبور" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3" style="text-align:end">
+
+                        <input type="submit" value="ورود" class="btn btn-large btn-success" />
+                        <a asp-controller="customer" class="btn btn-danger" asp-action="register">ثبت نام</a>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>

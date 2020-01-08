@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model ShopYB.Models.Account
+
+        
+    <div class="" style="background-color:white;text-align:justify;padding:10px 20px">
+
+        <div class="box" style="box-shadow:0px 0px">
+            <div class="row">
+                <div class="box-header">
+                    <h3> ثبت نام</h3>
+                </div>
+
+            </div>
+        </div>
+        <div class="well">
+
+            @if (ViewBag.error != null)
+            {
+                <div class="alert alert-error">
+                    <p>
+                        @ViewBag.error
+                    </p>
+                </div>
+            }
+
+        <form class="form-horizontal " asp-action="register" asp-controller="customer" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="control-group row">
+                <label class="control-label col-md-2" for="username">نام کاربری <sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" class="form-control col-md-12" id="username" required="required" placeholder="نام کاربری" asp-for="Username">
+                </div>
+            </div>
+            <br />
+            <div class="control-group row">
+                <label class="control-label col-md-2" for="fullname">نام و نام خانوادگی<sup>*</sup></label>
+                <div class="controls">
+                    <input type="text" id="fullname" class="form-control col-md-12" required="required" placeholder="نام و نام‌خانوادگی" asp-for="FullName">
+                </div>
+            </div>
+            <br />
+
+            <div class="control-group row">
+                <label class="control-label col-md-2" for="email">ایمیل <sup>*</sup></label>
+                <div class="controls">
+                    <input type="email" id="email" class="form-control col-md-12" required="required" placeholder="ایمیل" asp-for="Email">
+                </div>
+            </div>
+            <br />
+
+            <div class="control-group row">
+                <label class="control-label col-md-2" for="inputPassword1">رمز عبور <sup>*</sup></label>
+                <div class="controls">
+                    <input type="password" class="form-control col-md-12" id="inputPassword1" required="required" placeholder="رمز عبور" asp-for="Password">
+                </div>
+            </div>
+            <br />
+
+            <div class="control-group row">
+                <label class="control-label col-md-2" for="phone">شماره تلفن <sup>*</sup></label>
+                <div class="controls">
+                    <input type="number" class="form-control col-md-12" id="Phone" required="required" placeholder="تلفن" asp-for="Phone">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3" style="text-align:end">
+
+                    <input type="submit" value="ثبت نام" class="btn btn-large btn-success" />
+                </div>
+
+            </div>
+        </form>
+        </div>
+        </div>

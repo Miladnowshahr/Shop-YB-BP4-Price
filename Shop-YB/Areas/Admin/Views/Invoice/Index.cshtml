@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Invoices
+    </h1>
+</section>
+
+
+
+
+
+<section class="content">
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-danger">
+                    <h4><i class="icon fa fa-ban">Failed</i></h4>
+                    @TempData["Error"];
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Invoice List</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="InvoiceListTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in (IEnumerable<ShopYB.Models.Invoice>)ViewBag.Invoices)
+                            {
+                                var totalPrice = item.InvoiceDetails.Sum(x => x.Price * x.Quantity);
+                                <tr data-id="@item.Id   ">
+                                    
+                                    <td>@item.Name</td>
+                                    <td>@item.Created.ToString("yyyy/mm/dd")</td>
+                                    <td>@(item.Status == 1 ? "Pending" : "Done")</td>
+                                    <td>@totalPrice</td>
+                                    <td><a asp-area="admin" asp-controller="invoice" asp-action="detail" asp-route-id="@item.Id">Details</a></td>
+                                </tr>
+
+
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <!-- /.box -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section script{
+    <script>
+    $(function () {
+
+        $('#InvoiceListTable').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+    </script>
+
+
+
+}

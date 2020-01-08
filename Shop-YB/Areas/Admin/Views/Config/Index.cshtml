@@ -1,0 +1,100 @@
+﻿@model Config
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var image = Model.Logo ?? "no-image.png";
+}
+
+
+<section class="content-header">
+    <h1>
+        Configuration Properties
+    </h1>
+</section>
+
+
+
+
+
+<section class="content">
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-danger">
+                    <h4><i class="icon fa fa-ban">Failed</i></h4>
+                    @TempData["Error"];
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Properties</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="text-align:center;line-height:50px;font-size:x-large">
+                    <div style="text-align:center">
+                        <img src="~/Logo/@image" width="300" />
+                    </div>
+
+
+                    <div>
+                        <span><b>نام فروشگاه</b> :</span>
+                        <span>@Model.Name</span>
+                    </div>
+
+                    <div style="direction:rtl">
+                        <span><b>ایمیل فروشگاه</b> :</span>
+                        <span>@Model.Email</span>
+                    </div>
+
+                    <div>
+                        <span><b>تلفن فروشگاه</b> :</span>
+                        <span>@Model.Phone</span>
+                    </div>
+
+                    <div>
+                        <span><b>تلفن همراه فروشگاه</b> :</span>
+                        <span>@Model.Mobile</span>
+                    </div>
+
+                    <div>
+                        <span><b>آدرس فروشگاه</b> :</span>
+                        <span>@Model.Address</span>
+                    </div>
+
+                    <div>
+                        <span><b>شماره ثبت فروشگاه</b> :</span>
+                        <span>@Model.RecordNumber</span>
+                    </div>
+
+                    <div>
+                        <span><b>توضیحات</b> :</span>
+                        @Html.Raw(Model.Describe)
+                    </div>
+
+
+                    <a asp-action="edit" asp-controller="config" asp-route-id="@Model.Id" class="btn btn-primary pull-left">Edit</a>
+                </div>
+                <!-- /.box-body -->
+                <!-- /.box -->
+               
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</section>

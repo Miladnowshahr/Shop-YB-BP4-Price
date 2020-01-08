@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+    <div style="background-color:white;text-align:justify;padding:10px 20px">
+
+        <div class="box" style="box-shadow:0px 0px">
+            <div class="row">
+                <div class="box-header">
+                    <h3>داشبورد</h3>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="well">
+
+            <h4>
+                <a asp-controller="customer" asp-action="profile">تغییر پروفایل</a>
+            </h4>
+            <hr class="soft" />
+
+            <h4>
+                <a asp-controller="customer" asp-action="History">مدیریت فاکتور</a>
+            </h4>
+            <hr class="soft" />
+
+
+            <h4>
+                <a asp-controller="customer" asp-action="signout">خروج</a>
+            </h4>
+            <hr class="soft" />
+
+        </div>
+    </div>

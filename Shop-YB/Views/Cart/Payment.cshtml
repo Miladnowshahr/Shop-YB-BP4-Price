@@ -1,0 +1,212 @@
+﻿@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+    <div style="background-color:white">
+
+        <form asp-controller="cart" asp-action="checkout">
+            <div class="box" style="box-shadow:0px 0px">
+                <div class="row">
+                    <div class="box-header">
+                        <h3> روش پرداخت</h3>
+                    </div>
+
+                </div>
+            </div>
+            <p>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+            </p>
+
+            <div class="row">
+                <div class="col-lg-12" style="padding-right:30px;text-align:justify">
+
+
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="pay" class="card-input-element" value="1" asp-for="Pay" />
+                                <div class="payBox">
+                                    <span class="card-input1">
+                                        <strong>
+                                            پرداخت آنلاین
+                                        </strong>
+                                        <p>پرداخت آنلاین توسط کارت های عضو شتاب  و در گاه های بانکی موجود</p>
+                                    </span>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="pay" class="card-input-element" value="2" asp-for="Pay" />
+                                <div class="payBox">
+                                    <strong>پرداخت هنگام دریافت کالا</strong>
+                                    <br />
+                                    <span>
+                                        در این روش پس از دریافت کالا، پرداخت انجام می شود(فقط در رشت)
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="pay" class="card-input-element" value="3" asp-for="Pay" />
+                                <div class="payBox">
+                                    <strong>پرداخت فیش بانکی</strong>
+                                    <br />
+                                    <span>
+                                        در این روش شما ابتدا مبلغ را بصورت کارت به کارت به شماره حساب زیر ارسال خواهید کرد
+                                        و سپس با تایید سیستم مرسرسوله ارسال خواهد  شد
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+
+                    <hr class="soft" />
+
+                    @*<label>
+                    <input type="radio" name="pay" class="card-input-element" value="2" asp-for="Pay" />
+
+                    <div class="panel panel-default card-input">
+                            <div class="panel-heading ">Online Payment</div>
+                            <div class="panel-body">
+                                Pay by Creadit Card Visa MasterCart
+                            </div>
+                        </div>
+                </label>*@
+                    @*@Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.TotalPrice)
+                <input type="submit" value="پرداخت" style="margin-right:100px;margin-bottom:20px" class="btn btn-large btn-info" />*@
+
+
+                </div>
+
+            </div>
+
+            <br />
+
+            <div class="box" style="box-shadow:0px 0px">
+                <div class="row">
+                    <div class="box-header">
+                        <h3> روش ارسال</h3>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="padding-right:30px;text-align:justify">
+
+
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="ShipMethod" class="card-input-element" value="1" asp-for="Pay" />
+                                <div class="payBox">
+                                    <span class="card-input1">
+                                        <strong>
+                                            ارسال از طریق پست
+                                        </strong>
+                                        <p>مناسب برای حجم کوچک از طریق سیستم پستی کشور هزینه ارسال توسط خریدار هنگام دریافت کالا پرداخت می شود</p>
+                                    </span>
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="ShipMethod" class="card-input-element" value="2" asp-for="Pay" />
+                                <div class="payBox">
+                                    <strong>از طریق تیباکس</strong>
+                                    <br />
+                                    <span>
+                                        مناسب برای حجم های مرسوله کوچک از طریق سیستم تیباکس هزینه ارسال توسط خریدار هنگام دریافت کالا پرداخت میشود
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="ShipMethod" class="card-input-element" value="3" asp-for="Pay" />
+                                <div class="payBox">
+                                    <strong>ارسال از طریق باربری</strong>
+                                    <br />
+                                    <span>
+                                        مناسب برای خرید عمده، هزینه ارسال رایگان
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-10">
+
+                            <label>
+                                <input type="radio" name="ShipMethod" class="card-input-element" value="4" asp-for="Pay" />
+                                <div class="payBox">
+                                    <strong>ارسال توسط پیک</strong>
+                                    <br />
+                                    <span>
+
+                                        مناسب برای شهروندان رشتی، هزینه ارسال توسط خریدار هنگام دریافت کالا
+                                        برای سفارش بیشتر از 100,000تومان ارسال رایگان
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+
+                    <hr class="soft" />
+
+                    @*<label>
+                    <input type="radio" name="pay" class="card-input-element" value="2" asp-for="Pay" />
+
+                    <div class="panel panel-default card-input">
+                            <div class="panel-heading ">Online Payment</div>
+                            <div class="panel-body">
+                                Pay by Creadit Card Visa MasterCart
+                            </div>
+                        </div>
+                </label>*@
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.TotalPrice)
+                    <input type="submit" value="پرداخت" style="margin-right:100px;margin-bottom:20px" class="btn btn-large btn-info" />
+
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>

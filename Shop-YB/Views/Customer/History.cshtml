@@ -1,0 +1,161 @@
+﻿@model int
+@{
+    ViewData["Title"] = "History";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<style>
+    .details-control {
+        background-image: url('../../wwwroot/user/themes/images/plus.png');
+    }
+</style>
+
+<div class="" style="background-color:white;text-align:justify;padding:10px 20px">
+
+    <div class="box" style="box-shadow:0px 0px">
+        <div class="row">
+            <div class="box-header">
+                <h3> مدیریت فاکتورها</h3>
+            </div>
+
+        </div>
+    </div>
+   
+
+
+
+
+    <table id="example" class="display nowrap table-bordered " width="100%">
+        <thead>
+            <tr>
+                <th>-/+</th>
+                <th>شماره سفارش</th>
+                <th>تاریخ</th>
+                <th>وضعیت</th>
+                <th>قیمت</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th>-/+</th>
+                <th>شماره سفارش</th>
+                <th>تاریخ</th>
+                <th>وضعیت</th>
+                <th>قیمت</th>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            @foreach (var item in (IEnumerable<ShopYB.Models.Invoice>)ViewBag.Invoices)
+            {
+                var totalPrice = item.InvoiceDetails.Sum(x => x.Price * x.Quantity);
+                <tr data-id="@item.Id   ">
+                    <td></td>
+                    <td>@item.Name</td>
+                    <td>@item.Created.ToString("yyyy/mm/dd")</td>
+                    <td>@(item.Status == 1 ? "Pending" : "Done")</td>
+                    <td>@totalPrice.ToString("#,##")</td>
+
+
+
+
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+    @section script{
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+
+        <script>
+        //$(document).ready(function () {
+        //    $('#example').DataTable();
+        //});
+
+        function format(d) {
+            // `d` is the original data object for the row
+
+            var html = '<table cellpadding="5" class="sub-dt table table-bordered table-striped" cellspacing="0" border="0" style="padding-left:50px;background:#dc3545">' +
+                '<thead style="bacground:#dc3545"><tr><th>قیمت</th><th>تعداد</th><th>جمع</th></tr></thead><tbody style="background:#dc3545">';
+            for (var i = 0; i < d.length; i++) {
+
+
+                html += '<tr><td>';
+                html += d[i].price;
+                html += '</td><td>';
+                html += d[i].quantity;
+                html += '</td><td>';
+                html+=d[i].quantity*d[i].price
+
+                html += '</td></tr>';
+                }
+            html += '</tbody></table>';
+
+            return html;
+        };
+
+        function loadAjaxInfo(id, callback) {
+
+            $.ajax({
+                url: '@Url.Action("detail","customer")',
+                data: { id:id},
+                type:'GET',
+              success: function(response){
+                callback(format(response));
+              }
+            })
+        }
+
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+
+        "columns": [
+            {
+                "className":      'details-control',
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ''
+            },
+            { "data": "name" },
+            { "data": "Created" },
+            { "data": "Status" },
+            { "data": "Price" },
+
+        ],
+        "order": [[1, 'asc']]
+    } );
+
+    // Add event listener for opening and closing details
+    $('#example tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var id = $(this).closest('tr').data('id');
+
+        var row = table.row(tr);
+
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+          loadAjaxInfo(id, function(formattedContent){
+            // Open this row
+            row.child(formattedContent).show();
+            tr.addClass('shown');
+          });
+        }
+    } );
+} );
+        </script>
+    }

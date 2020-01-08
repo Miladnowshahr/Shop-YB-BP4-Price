@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ShopYB.Models.Comment>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Comment List
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Comment Table</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="categoryTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Product Name</th>
+                                <th>Date Time</th>
+                                <th>Status</th>
+
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                              
+
+                                    <tr  style="@(item.IsRead? "font-weight:italic":"font-size:12pt")">
+
+                                        <td><b>@item.FullName</b></td>
+                                        <td><b>@item.Product.Name</b></td>
+                                        <td><b>@item.Date_Time</b></td>
+
+                                        <td>@(item.Status ? "Show" : "Hide")</td>
+                                        <td>
+                                            <a asp-area="admin" asp-controller="comment" asp-action="changeSt" asp-route-id="@item.Id">Change Status</a>
+                                            |
+                                            <a asp-area="admin" asp-controller="comment" asp-action="delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure?')">Delete</a>
+                                        </td>
+                                    </tr>
+                                
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th>Full Name</th>
+                                <th>Product Name</th>
+                                <th>Date Time</th>
+                                <th>Status</th>
+
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <!-- /.box -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section script{
+    <script>
+        $(function () {
+
+            $('#categoryTable').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
+        })
+    </script>
+
+
+
+}
+

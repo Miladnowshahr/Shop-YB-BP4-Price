@@ -1,0 +1,82 @@
+﻿@{ 
+    var totalPrice = ViewBag.TotalPrice;
+    var quantity = ViewBag.Quantity;
+    var shipping = ViewBag.Shipping;
+    var totalPriceWithShipping = shipping + totalPrice;
+}
+
+<div class="row-fluid">
+  
+        <div class="panel panel-default panelPrice">
+            <div class="panel-heading">
+                Price
+            </div>
+            <div class="panel-body">
+                <div class="row-fluid">
+                    <div class="span6">
+                        Total Price(@quantity)
+                    </div>
+                    <div class="span6">
+                        $@totalPrice
+                    </div>
+                </div>
+                <hr class="soft" />
+                <div class="row-fluid">
+
+                    <div class="span6">
+                        Dicount
+                    </div>
+                    <div class="span6">
+                        $0
+                    </div>
+                </div>
+                <hr class="soft" />
+
+                <div class="row-fluid">
+
+                    <div class="span6">
+                        Shipping Pay
+                    </div>
+                    <div class="span6">
+                        @if (shipping == 0)
+                        {
+                            <span>Free</span>
+                        }
+                        else
+                        {
+                            
+                            <span>$@shipping</span>
+                        }
+                    </div>
+                </div>
+                <hr class="soft" />
+
+                <br />
+
+                <div class="row-fluid">
+
+                    <div class="span12 ">
+                        <center>
+                            <input type="hidden" value="@totalPriceWithShipping" />
+                            <span class="">
+                                Total Price:
+                            </span>
+                            <span id="total" class="totalPrice">@totalPriceWithShipping</span>
+                        </center>
+                    </div>
+                    @*<input id="btnContinue" type="button" class="btn btn-large btn-success" value="Continue" />*@
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    
+
+<script>
+
+  
+ 
+
+</script>

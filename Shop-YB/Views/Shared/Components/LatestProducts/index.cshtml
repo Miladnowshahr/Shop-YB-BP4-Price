@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ShopYB.Models.Product>
+@{
+    Layout = null;
+}
+
+
+<hr class="soft" />
+<h4 style="text-align:center">جدیدترین محصولات</h4>
+<br />
+@foreach (var product in Model)
+{
+    var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+
+    <div class="thumbnail">
+        <a asp-controller="product" asp-action="details" asp-route-id="@product.Id">
+            <img src="~/products/@image" alt="@product.Name" />
+        </a>
+        <div class="caption">
+            <h5>@product.Name</h5>
+            <h4 style="text-align:center">
+                <a class="btn" asp-controller="product" asp-action="details" asp-route-id="@product.Id">
+                    <i class="icon-zoom-in"></i>
+                </a>
+                <a class="btn" asp-controller="cart" asp-action="buy" asp-route-id="@product.Id">خرید<i class="icon-shopping-cart"></i></a>
+                <a class="btn btn-primary" href="#">@product.Price.ToString("#,##")</a>
+            </h4>
+        </div>
+    </div>
+    <br />
+}

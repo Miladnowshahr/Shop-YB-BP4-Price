@@ -1,0 +1,284 @@
+﻿@using System.Security.Claims;
+@{
+    var role = User.FindFirst(ClaimTypes.Role);
+    var user = User.FindFirst(ClaimTypes.Name);
+
+}
+@inject DatabaseContext db
+@{ 
+    var config = db.Configs.FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>فروشگاه گیل شرق</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="~/user/themes/css/base.css" rel="stylesheet" />
+    
+    <link href="~/user/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="~/user/themes/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/user/themes/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/user/themes/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/user/themes/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/user/themes/images/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css" id="enject"></style>
+
+
+
+
+    @*<link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+</head>
+<body style="font-family:'b yekan';" dir="rtl">
+    <div id="header">
+        <div class="container">
+
+            @*@await Component.InvokeAsync("CartTop")*@
+
+
+            <!-- Navbar ================================================== -->
+
+            <nav class="navbar navbar-expand-lg  navbar-dark bg-primary fixed-top" style="    box-shadow: 0px 11px 36px #b7b4b4;">
+                <a class="navbar-brand" asp-controller="home" asp-action="index" >فروشگاه گیل‌شرق</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-2">
+                        <li class="nav-item active">
+                            <a class="nav-link"asp-controller="home" asp-action="index" >صفحه اصلی <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                محصولات
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">چای</a>
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">برنج</a>
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="2">دمنوش</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="home" asp-action="ContactUs">ارتباط با ما</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="home" asp-action="AboutUs">درباره ما</a>
+                        </li>
+                       
+                        @if ( ViewBag.Basket != null)
+                        {
+                            <li class="nav-item mr-auto">
+
+                                <a class="nav-link" href="#"><i class="fa fa-shopping-basket"></i>   @ViewBag.Basket</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item mr-auto">
+                                
+                                <a class="nav-link" href="#">سبد خرید من</a>
+                            </li>
+
+                        }
+
+                    </ul>
+                    <ul class="navbar-nav mr-auto">
+                        @if (user == null || role.Value == "admin")
+                        {
+                            <li class="">
+                                <a href="#myModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">ورود</a>
+
+                            </li>
+                        }
+                        else if (user != null && role.Value == "customer")
+                        {
+
+                            <li class="ml-4">
+                                <a asp-controller="customer" class="nav-link" asp-action="dashboard" role="button">
+                                    <span>خوش آمدید @user.Value</span>
+                                </a>
+                            </li>
+
+                            <li class="mr-2"><a asp-controller="customer" class="btn btn-outline-danger" asp-action="signout">خروج</a></li>
+
+                        }
+                    </ul>
+                    @*<form class="form-inline my-2 my-lg-0 mr-auto ">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>*@
+                </div>
+            </nav>
+
+        </div>
+    </div>
+    <!-- Header End====================================================================== -->
+    <div style="padding-top:59px;" >
+        @if (ViewBag.isHome != null)
+        {
+            @await Component.InvokeAsync("SlideShow")
+
+        }
+    </div>
+
+
+    <div id="mainBody" style="background-color:#dbdbdb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" dir="rtl" style="padding-bottom:20px;">
+                    @if (ViewBag.IsHome == null)
+                    {
+                        <breadcrumb></breadcrumb>
+                    }
+
+
+                    @RenderBody()
+
+                </div>
+                <!-- Sidebar ================================================== -->
+               
+                
+                
+                @*<div id="sidebar" class="span3">
+
+                    @if (ViewBag.Ship == null)
+                        {
+
+                            <div class="well well-small">
+                                @await Component.InvokeAsync("CartLeft")
+                            </div>
+
+                            @await Component.InvokeAsync("Category")
+                            <br />
+
+                            @await Component.InvokeAsync("LatestProducts")
+                        }
+                        else
+                        {
+                            @await Component.InvokeAsync("SidePrice")
+                        }
+                </div>*@
+                <!-- Sidebar end=============================================== -->
+
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <!-- Footer ================================================================== -->
+    <div id="footerSection"  style="padding-bottom:10px;margin-top:0px!important">
+        <div class="container">
+            <div class="row">
+
+
+                <div class="col-lg-3" style="text-align:center">
+                    <h5>حساب کاربری</h5>
+                    <a href="login.html">حساب شما</a>
+                    <a href="login.html">پروفایل</a>
+                    <a href="login.html">افزودن آدرس</a>
+                    <a href="login.html">تایخچه خرید</a>
+                </div>
+                <div class="col-lg-3" style="text-align:center">
+                    <h5>اطلاعات</h5>
+                    <a asp-controller="home" asp-action="contactus">ارتباط با ما</a>
+                    <a asp-action="Register" asp-controller="customer">عضویت</a>
+                    <a asp-action="termPolicy" asp-controller="home">قوانین و شرایط خرید</a>
+                </div>
+                <div class="col-lg-3" style="text-align:center">
+                    <h5>پشتیبانی</h5>
+                    <a href="#">@config.Address</a>
+                    <a href="#">@config.Phone.ToString()</a>
+                    
+                </div>
+                <div class="col-lg-3" id="socialMedia" style="text-align:center">
+                    <h5>شبکه های اجتماعی </h5>
+                    <a href="#"><img width="60" height="60" src="~/user/themes/images/facebook.png" title="facebook" alt="facebook" /></a>
+                    <a href="#"><img width="60" height="60" src="~/user/themes/images/twitter.png" title="twitter" alt="twitter" /></a>
+                    <a href="#"><img width="60" height="60" src="~/user/themes/images/youtube.png" title="youtube" alt="youtube" /></a>
+                </div>
+            </div>
+            <hr />
+            <p style="text-align:center;">&copy; طراحی و توسعه توسط میلاد نعمت پور</p>
+        </div><!-- Container End -->
+    </div>
+    <!-- Placed at the end of the document so the pages load faster ============================================= -->
+    <!-- Modal Login ============================================= -->
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">ورود</h5>
+                    <button type="button" class="close pull-left" style="padding:0px;margin:0px;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form-horizontal loginFrm" method="get" asp-controller="customer" asp-action="login">
+                    <div class="modal-body">
+
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-4 col-form-label">نام کاربری</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-4 col-form-label">گذرواژه</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">ورود</button>
+                        <a asp-controller="customer" asp-action="register" class="btn btn-danger">ثبت نام</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">خروج</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- Script ============================================= -->
+
+    <script src="~/user/themes/js/google-code-prettify/prettify.js"></script>
+
+    
+    @*<script src="~/user/themes/js/jquery.lightbox-0.5.js"></script>*@
+    @RenderSection("script", false)
+</body>
+
+
+</html>

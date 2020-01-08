@@ -1,0 +1,393 @@
+﻿@model ShopYB.Models.ViewModels.ProductDetailViewModel
+@{
+
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    var featuredImage = Model.Product.Photos.SingleOrDefault(x => x.Featured == true && x.Status).Name;
+    var images = Model.Product.Photos.Where(x => x.Status);
+
+}
+
+<div style="background-color:white">
+    <div class="row">
+        <div id="gallery" class="col-lg-4" style="padding-right:30px;margin-top:30px">
+            <a href="~/products/@featuredImage"  data-lightbox="example-set" title="@Model.Product.Name">
+                <img src="~/products/@featuredImage" class="example-image" style="width:100%" alt="@Model.Product.Name">
+            </a>
+            <div id="differentview" class="moreOptopm carousel slide">
+                <div class="carousel-inner">
+
+
+                    <div class="item active">
+                        @foreach (var image in images)
+                        {
+                            <a href="~/products/@image.Name">
+                                <img style="width:29%" src="~/products/@image.Name" alt="">
+                            </a>
+
+                        }
+
+                    </div>
+
+                </div>
+                <!--
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                -->
+            </div>
+
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <span class="btn"><i class="icon-envelope"></i></span>
+                    <span class="btn"><i class="icon-print"></i></span>
+                    <span class="btn"><i class="icon-zoom-in"></i></span>
+                    <span class="btn"><i class="icon-star"></i></span>
+                    <span class="btn"><i class=" icon-thumbs-up"></i></span>
+                    <span class="btn"><i class="icon-thumbs-down"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+
+            <h3 style="padding-top:30px;text-align:center">@Model.Product.Name</h3>
+            <hr class="soft">
+
+            <p style="text-align:justify;    margin: 50px;">
+                @Model.Product.Description
+            </p>
+
+
+            <hr class="soft clr">
+
+            <form class="form-horizontal qtyFrm" asp-controller="cart" asp-action="buy" asp-route-id="@Model.Product.Id" method="get">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <span class="btn btn-large btn-danger">
+                            @Model.ProductPrice.BasePrice.ToString("#,##") <span>ریال</span>
+                        </span>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <input type="number" min="1" value="1" class="col-lg-6 form-control" name="quantity">
+
+                    </div>
+                    <div class="col-lg-4">
+                        <button type="submit" class="btn btn-large btn-primary pull-right"> افزودن به سبد <i class=" icon-shopping-cart"></i></button>
+
+                    </div>
+                </div>
+
+
+
+            </form>
+
+
+
+        </div>
+    </div>
+
+    <hr />
+
+    @*<div class="row" dir="rtl" style="margin-right:auto;margin-left:15px;padding:20px;">
+            <div class="col-lg-12" style="font-family:'B Yekan'!important   ">
+                <h4 style="text-align:justify;font-size:18pt;font-style:normal;text-shadow:1px 1px #000000">اطلاعات محصول</h4>
+
+
+            </div>
+        </div>*@
+
+    <div class="box">
+
+
+        <div class="row">
+            <div class="box-header">
+                <h2>اطلاعات محصول</h2>
+            </div>
+        </div>
+        <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
+            <p style="text-align:justify;font-size:13pt; line-height: 30px;">
+                @Html.Raw(Model.Product.Details)
+
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="box" style="padding-bottom:20px;">
+        <div class="row" style="padding-top:50px">
+            <div class="box-header">
+                <h2>محصولات مشابه</h2>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="container-fluid" dir="ltr">
+                <div id="smilarProduct" class="owl-carousel owl-theme card-deck">
+                    @{
+
+                        var products = Model.RelatedProduct;
+                        foreach (var product in products)
+                        {
+                            var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+                            <div class="card text-center car" style="height:320px;">
+
+                                <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+
+                                <div class="card-body">
+                                    <h5 class="card-title small" style="height:40px">@product.Name</h5>
+                                    <p class="card-text " style="color:#c13260;" dir="rtl">
+                                        @product.ProductPrices.FirstOrDefault(x=>x.IsActive==true && x.ProductId==product.Id).BasePrice.ToString("#,##")<span>  ریال </span>
+                                    </p>
+                                </div>
+                                <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-danger">
+                                    افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                                </a>
+                            </div>
+
+                        }
+
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="box" style="padding-bottom:20px;">
+
+
+        <div class="row">
+            <div class="box-header">
+                <h2>ارسال نظر</h2>
+            </div>
+        </div>
+        <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
+            <form id="frmComment">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4" for="name"><span class="fa fa-user-plus"></span> نام و نام‌خانوادگی</label>
+                            <input type="text" class="form-control" name="fullname" required="required" placeholder="نام ...">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="email"><span class="fa fa-envelope"></span> ایمیل</label>
+                            <input type="email" class="form-control" id="email" required="required" name="email" placeholder="ایمیل">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row-fluid">
+                    <div class="col-lg-12">
+
+                        <label for="content"><span class="fa fa-comment"></span> نظر</label>
+                        <textarea rows="8" style="width:100%" class="form-control" id="content" required="required" name="content" placeholder="نظر خود را وارد نمایید"></textarea>
+
+                    </div>
+
+
+                </div>
+
+                <br />
+                <button type="submit" id="sendComment" class="btn btn-info btn-large pull-left"><span class="fa fa-save"></span> ارسال نظر</button>
+
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="box" style="padding-bottom:20px;">
+
+        <div class="row">
+            <div class="box-header">
+                <h2>نظرات کاربران</h2>
+            </div>
+        </div>
+        <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
+            <div class="showComment">
+                @{
+                    foreach (var item in (IEnumerable<ShopYB.Models.Comment>)ViewBag.Comment)
+                    {
+                        var countDislike = item.LikeDislikes.Count(x => x.Status == false);
+                        var countLike = item.LikeDislikes.Count(x => x.Status == true);
+
+                        <div class="parentComment">
+                            <div class="parentCommentHeader">
+                                <img class="imgUser_Comment" src="~/user/themes/images/userComent.jpg" />
+                                <span class="username_Comment">@item.FullName</span>
+                                <span class="dateComment">@item.Date_Time</span>
+                            </div>
+                            <div class="bodyComment">
+                                <p>@item.Content</p>
+
+                            </div>
+                            <div class="footerComment">
+                                <div class="likeDislike">
+                                    <span class="dislike btn btn-danger" onclick="likeComment(@item.Id,false,this);" id="dislike">
+                                        <span id="countdislike" class="count">@countDislike</span>
+                                        <span class="fa fa-thumbs-down"></span>
+                                    </span>
+                                    <span class="like btn btn-success" onclick="likeComment(@item.Id,true,this);" id="like">
+                                        <span id="countlike" class="count">@countLike</span>
+                                        <span class="fa fa-thumbs-up"></span>
+                                    </span>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+                    }
+                }
+
+
+            </div>
+        </div>
+
+        <div class="showmore">
+            <a href="#" id="moreComment" count="1" class="moreComment">Show More </a>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<link href="~/user/themes/LightBox/css/lightbox.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/user/themes/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+<script src="~/user/themes/LightBox/js/lightbox.js"></script>
+<script>
+
+     $('#smilarProduct').owlCarousel({
+        loop: false,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+
+
+
+    $("#frmComment").submit(function (e) {
+
+        e.preventDefault();
+        var form = $(this);
+
+
+         $.ajax({
+
+             url: "@Url.Action("comment","product")",
+             type: "POST",
+             data: form.serialize(),
+             success: function (data) {
+                 if (data == 1) {
+                     alert("Your Comment Sucessfuly Done");
+                     location.reload();
+                 }
+                 else {
+                     alert("Add Comment Have Problem");
+
+                 }
+             }
+         });
+
+    });
+
+
+    
+
+
+
+
+
+    function likeComment(cId, st, el) {
+
+
+        var count = parseInt(el.innerText);
+
+
+
+        //var count = parseInt(el.innerHTML);
+            var likeOrDislike = 'dislike';
+            if (st==false) {
+                likeOrDislike = 'like';
+        }
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("LikeDislike","product")",
+                data: { id: cId, status: st },
+                success: function(response) {
+                    if (response == 1) {
+                        el.innerText = parseInt(count + 1);
+
+                    } else if (response == 2) {
+
+                        console.log(el.parentNode);
+                        console.log(el.children[0]);
+                        el.children[0].innerText = count + 1;
+
+
+                        var minus = el.parentNode.children[likeOrDislike].children['count' + likeOrDislike].innerText;
+
+
+                        if (minus > 0) {
+
+                              el.parentNode.children[likeOrDislike].children['count'+likeOrDislike].innerText = minus - 1;
+                            return 0;
+                        }
+
+
+                        //console.log($minuselment);
+
+                        //el.parentNode.parentElement.children[likeOrDislike].children[likeOrDislike]
+                        //    .innerHTML = parseInt($minuselment - 1);
+                        //console.log($minuselment);
+
+                        //el.innerText = parseInt(count + 1);
+
+
+
+                    }
+
+                    else if (response == 3) {
+                        alert("کاربر گرامی نظر شما ثبت شده است");
+
+                    }
+                    else{
+                        alert("خطا! نظر شما ثبت نشده است");
+
+                    }
+                },
+                error: function() {
+                    alert("خطا!!");
+                }
+            });
+        }
+</script>

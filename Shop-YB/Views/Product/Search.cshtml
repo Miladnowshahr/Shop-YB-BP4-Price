@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@using X.PagedList;
+@using X.PagedList.Mvc.Common;
+@using X.PagedList.Mvc.Core;
+
+
+
+
+
+<h3> @ViewBag.Keyword <small class="pull-right"> @ViewBag.CountProduct </small></h3>
+
+<hr class="soft" />
+@*<form id="frmOrder" asp-controller="product" asp-action="category" asp-route-id="@ViewBag.Category.Id" class="form-horizontal span6">
+    <div class="control-group">
+        <select id="optOrder" name="order">
+            <option value="1" selected="@(ViewBag.Order==1)">Priduct name A - Z</option>
+            <option value="2" selected="@(ViewBag.Order==2)">Priduct name Z - A</option>
+            <option value="3" selected="@(ViewBag.Order==3)">Latest Product - Default</option>
+            <option value="4" selected="@(ViewBag.Order==4)">Price Lowest first</option>
+            <option value="5" selected="@(ViewBag.Order==5)">Price Highest first</option>
+            <option value="6" selected="@(ViewBag.Order==6)">Popularity Product</option>
+
+        </select>
+        <label style="float:right" class="control-label alignL">مرتب سازی   </label>
+
+    </div>
+</form>*@
+
+<div id="myTab" class="pull-right">
+    <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
+    <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
+</div>
+<br class="clr" />
+<div class="tab-content">
+
+
+    <div class="tab-pane" id="listView">
+
+        @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
+        {
+            var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
+
+
+        <div class="row">
+            <a asp-action="details" asp-route-id="@product.Id" asp-controller="product">
+
+            <div class="span2">
+                <img src="~/products/@image" alt="" />
+            </div>
+            <div class="span4">
+                @*<h3>New | Available</h3>
+            <hr class="soft" />*@
+                <h5>@product.Name </h5>
+                @*<p>
+                @product.Description
+            </p>*@
+                <br class="clr" />
+            </div>
+                </a>
+            <div class="span3 alignR">
+                <form class="form-horizontal qtyFrm">
+                    <h3>@product.Price.ToString("#,##") ریال</h3>
+                    @*<label class="checkbox">
+                    <input type="checkbox">  Adds product to compair
+                </label>*@<br />
+
+                    <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-success">خرید <i class=" icon-shopping-cart"></i></a>
+                    @*<a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>*@
+
+                </form>
+            </div>
+        </div>
+            <hr class="soft" />
+        }
+    </div>
+
+    <div class="tab-pane  active" id="blockView">
+        <ul class="thumbnails">
+
+            @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
+            {
+                var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
+
+                <li class="span3">
+                    <div class="thumbnail">
+                        <a asp-action="details" asp-route-id="@product.Id" asp-controller="product"><img src="~/products/@image" alt="" /></a>
+                        <div class="caption">
+                            <h5>@product.Name</h5>
+                            @*<p>
+                                @product.Description
+                            </p>*@
+                            <h4 style="text-align:center">
+                                @*<a class="btn" href="product_details.html">
+                                    <i class="icon-zoom-in"></i>
+                                </a>*@
+                                <a class="btn btn-success" asp-controller="cart" asp-action="buy" asp-route-id="@product.Id">
+                                   خرید
+                                    <i class="icon-shopping-cart"></i>
+                                </a>
+                                <a class="btn btn-danger" href="#">@product.Price.ToString("#,##") ریال</a>
+                            </h4>
+
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        <hr class="soft" />
+    </div>
+</div>
+
+
+
+
+
+<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
+<div class="pagination">
+    @Html.PagedListPager((IPagedList)ViewBag.Products, page => Url.Action("search", "product", new { page = page,categoryId=ViewBag.CategoryId,keyword=ViewBag.keyword }))
+</div>
+<br class="clr" />
+
+

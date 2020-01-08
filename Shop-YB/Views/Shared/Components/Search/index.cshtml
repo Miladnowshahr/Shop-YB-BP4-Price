@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+    <form class="form-inline navbar-search" style="float:none" method="get" asp-controller="product" asp-action="category">
+
+        @*<button type="submit" id="submitButton" class="btn btn-primary">Go</button>*@
+
+        <input id="srchFld" class="srchTxt" type="text" style="border-radius:20px;" name="keyword" value="@Model.keyword" />
+        @*<select class="srchTxt" name="categoryId">
+        @foreach (var category in Model.Categories)
+        {
+            if (category.InverseParents != null && category.InverseParents.Count > 0)
+            {
+        <optgroup label="@category.Name">
+            @foreach (var subcategory in category.InverseParents)
+            {
+                @if (subcategory.Status)
+                {
+                    <!option value="@subcategory.Id" selected="@(subcategory.Id==Model.categoryId)" >@subcategory.Name</!option>
+
+                }
+            }
+        </optgroup>
+            }
+            else
+            {
+                <!option value="@category.Id" selected="@(category.Id==Model.categoryId)">@category.Name</!option>
+
+            }
+
+        }
+            </select>*@
+    </form>
