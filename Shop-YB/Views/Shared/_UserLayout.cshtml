@@ -5,7 +5,7 @@
 
 }
 @inject DatabaseContext db
-@{ 
+@{
     var config = db.Configs.FirstOrDefault();
 }
 
@@ -14,14 +14,14 @@
 <head>
     <meta charset="utf-8">
     <title>فروشگاه گیل شرق</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
     <meta name="author" content="">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link href="~/user/themes/css/base.css" rel="stylesheet" />
-    
+
     <link href="~/user/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="~/user/themes/images/ico/favicon.ico">
@@ -30,14 +30,16 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/user/themes/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="~/user/themes/images/ico/apple-touch-icon-57-precomposed.png">
     <style type="text/css" id="enject"></style>
+    <link href="~/user/materialdesignicons.css" rel="stylesheet" />
+
 
 
 
 
     @*<link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+        <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -50,7 +52,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
 </head>
-<body style="font-family:'b yekan';" dir="rtl">
+<body dir="rtl">
     <div id="header">
         <div class="container">
 
@@ -59,57 +61,85 @@
 
             <!-- Navbar ================================================== -->
 
-            <nav class="navbar navbar-expand-lg  navbar-dark bg-primary fixed-top" style="    box-shadow: 0px 11px 36px #b7b4b4;">
-                <a class="navbar-brand" asp-controller="home" asp-action="index" >فروشگاه گیل‌شرق</a>
+            <nav class="navbar navbar-expand-lg  navbar-dark fixed-top" style="background-color: #df2537; box-shadow: 0px 1px 10px #000;">
+                <a class="navbar-brand" asp-controller="home" asp-action="index"><img src="~/Logo/@config.Logo" width="90px" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-2">
+
+
+                        <li class="nav-item active dropdown ">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                چای
+                            </a>
+                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                <div class="row">
+                                    <ul class="col-lg-4" style="list-style-type:none;padding:0.5rem 3rem;line-height:3">
+
+                                        <li><a class="menu-link" asp-controller="product" asp-action="category" asp-route-categoryId="1"> <span id="chai_ghalam"> چای سیاه</span></a>  </li>
+                                        <li><a class="menu-link" asp-action="" asp-route-id=""> <span id="chai_sabz"> چای سبز</span></a></li>
+                                    </ul>
+                                    <div class="col-lg-8">
+                                        <img id="img_ghalam" style="display:none" class="img-responsive img-rounded" height="200px" src="/products/09182019075502چای قلم.png" />
+                                        <img id="img_sabz" class="img-responsive" style="display:none" height="200px" src="~/products/09182019113306چای شکسته.jpg" />
+
+                                    </div>
+                                </div>
+
+
+
+                                @*<a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">چای سیاه قلم</a>
+                                    <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">چای سیاه ممتاز</a>
+                                    <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="2">چای سبز</a>*@
+                            </div>
+                        </li>
                         <li class="nav-item active">
-                            <a class="nav-link"asp-controller="home" asp-action="index" >صفحه اصلی <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" asp-controller="home" asp-action="index">برنج<span class="sr-only">(current)</span></a>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                محصولات
+
+                        <li class="nav-item active dropdown ">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                خشکبار شمال
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">چای</a>
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">برنج</a>
+                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">بادام زمینی</a>
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">فندق</a>
+                            </div>
+                        </li>
+                        <li class="nav-item active dropdown ">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                سایر محصولات
+                            </a>
+                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">عرقیجات</a>
+                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">زعفران</a>
                                 <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="2">دمنوش</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="home" asp-action="ContactUs">ارتباط با ما</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="home" asp-action="AboutUs">درباره ما</a>
-                        </li>
-                       
-                        @if ( ViewBag.Basket != null)
-                        {
-                            <li class="nav-item mr-auto">
-
-                                <a class="nav-link" href="#"><i class="fa fa-shopping-basket"></i>   @ViewBag.Basket</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item mr-auto">
-                                
-                                <a class="nav-link" href="#">سبد خرید من</a>
-                            </li>
-
-                        }
 
                     </ul>
                     <ul class="navbar-nav mr-auto">
+
+                       
+                            <li class="nav-item mr-auto">
+
+                                <a class="nav-link" href="#">
+                                    سبد خرید من (
+                                    <span id="mybasket"></span>)
+                                </a>
+                            </li>
+
+                        
+
+
                         @if (user == null || role.Value == "admin")
                         {
                             <li class="">
-                                <a href="#myModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">ورود</a>
+                                <a href="#myModal" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">ورود</a>
 
                             </li>
                         }
@@ -136,7 +166,7 @@
         </div>
     </div>
     <!-- Header End====================================================================== -->
-    <div style="padding-top:59px;" >
+    <div style="padding-top:58px;">
         @if (ViewBag.isHome != null)
         {
             @await Component.InvokeAsync("SlideShow")
@@ -159,28 +189,25 @@
 
                 </div>
                 <!-- Sidebar ================================================== -->
-               
-                
-                
                 @*<div id="sidebar" class="span3">
 
-                    @if (ViewBag.Ship == null)
-                        {
+                        @if (ViewBag.Ship == null)
+                            {
 
-                            <div class="well well-small">
-                                @await Component.InvokeAsync("CartLeft")
-                            </div>
+                                <div class="well well-small">
+                                    @await Component.InvokeAsync("CartLeft")
+                                </div>
 
-                            @await Component.InvokeAsync("Category")
-                            <br />
+                                @await Component.InvokeAsync("Category")
+                                <br />
 
-                            @await Component.InvokeAsync("LatestProducts")
-                        }
-                        else
-                        {
-                            @await Component.InvokeAsync("SidePrice")
-                        }
-                </div>*@
+                                @await Component.InvokeAsync("LatestProducts")
+                            }
+                            else
+                            {
+                                @await Component.InvokeAsync("SidePrice")
+                            }
+                    </div>*@
                 <!-- Sidebar end=============================================== -->
 
             </div>
@@ -188,10 +215,10 @@
     </div>
 
 
-    
+
 
     <!-- Footer ================================================================== -->
-    <div id="footerSection"  style="padding-bottom:10px;margin-top:0px!important">
+    <div id="footerSection" style="padding-bottom:10px;margin-top:0px!important">
         <div class="container">
             <div class="row">
 
@@ -211,9 +238,9 @@
                 </div>
                 <div class="col-lg-3" style="text-align:center">
                     <h5>پشتیبانی</h5>
-                    <a href="#">@config.Address</a>
-                    <a href="#">@config.Phone.ToString()</a>
-                    
+                    <a href="#">@config?.Address</a>
+                    <a href="#">@config?.Phone.ToString()</a>
+
                 </div>
                 <div class="col-lg-3" id="socialMedia" style="text-align:center">
                     <h5>شبکه های اجتماعی </h5>
@@ -274,11 +301,49 @@
     <!-- Script ============================================= -->
 
     <script src="~/user/themes/js/google-code-prettify/prettify.js"></script>
+    <script>
+        $("#chai_ghalam").hover(function () {
+            $("#img_ghalam").show();
+            $("#img_momtaz").hide();
+            $("#img_sabz").hide();
 
-    
+        });
+        $("#chai_momtaz").hover(function () {
+            $("#img_ghalam").hide();
+            $("#img_momtaz").show();
+            $("#img_sabz").hide();
+
+        });
+        $("#chai_sabz").hover(function () {
+            $("#img_ghalam").hide();
+            $("#img_momtaz").hide();
+            $("#img_sabz").show();
+
+        });
+
+    </script>
+
     @*<script src="~/user/themes/js/jquery.lightbox-0.5.js"></script>*@
     @RenderSection("script", false)
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            basket();
+        })
+        function basket() {
+
+            $.ajax({
+                method: 'Get',
+                url: '/cart/GetCountSession',
+                success: function (data) {
+                    $("#mybasket").html(data);
+                },
+                error: (function (data) {
+                    console.log(data);
+                })
+            })
+        }
+
+    </script>
 </body>
-
-
 </html>

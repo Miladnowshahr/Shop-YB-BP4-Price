@@ -33,7 +33,15 @@ namespace ShopYB.Areas.Admin.Controllers
             return View(model);
         }
 
-       [Route("TermPolicy")]
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var config = new Config();
+            return View("Edit", config);
+        }
+
+
+        [Route("TermPolicy")]
         public IActionResult TermPolicy()
         {
             var model = _db.Configs.FirstOrDefault();
@@ -50,6 +58,9 @@ namespace ShopYB.Areas.Admin.Controllers
             return RedirectToAction("index");
         }
 
+      
+
+
 
         [HttpGet]
         [Route("edit")]
@@ -60,38 +71,70 @@ namespace ShopYB.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Route("edit")]
-        public IActionResult Edit(Config model, IFormFile logo)
+        [Route("save")]
+        public IActionResult Save(int? id,Config model, IFormFile logo)
         {
-            var configEdit = _db.Configs.Find(model.Id);
-
-            string filename = "no-image.png";
-            if (logo != null && !string.IsNullOrEmpty(logo.FileName))
+            if (id==null || id==0)
             {
-                filename = DateTime.Now.ToString("MMddyyyyhhmmss") + logo.FileName;
+                string filename = "no-image.png";
+                if (logo != null && !string.IsNullOrEmpty(logo.FileName))
+                {
+                    filename = DateTime.Now.ToString("MMddyyyyhhmmss") + logo.FileName;
 
-                var path = Path.Combine(this.ihostingEnvironment.WebRootPath, "Logo",
-                    filename);
+                    var path = Path.Combine(this.ihostingEnvironment.WebRootPath, "Logo",
+                        filename);
 
-                var stream = new FileStream(path, FileMode.Create);
-                logo.CopyToAsync(stream);
-               
+                    var stream = new FileStream(path, FileMode.Create);
+                    logo.CopyToAsync(stream);
+
+                }
+                var addConfig = new Config();
+                addConfig.RecordNumber = model.RecordNumber;
+                addConfig.Phone = model.Phone;
+                addConfig.Name = model.Name;
+                addConfig.Mobile = model.Mobile;
+                addConfig.Email = model.Email;
+                addConfig.Describe = model.Describe;
+                addConfig.Address = model.Address;
+                addConfig.Logo = filename;
+
+                _db.Configs.Add(addConfig);
+                    
+                _db.SaveChanges();
             }
+            else
+            {
+                var configEdit = _db.Configs.Find(model.Id);
 
-            
-            configEdit.RecordNumber = model.RecordNumber;
-            configEdit.Phone = model.Phone;
-            configEdit.Name = model.Name;
-            configEdit.Mobile = model.Mobile;
-            configEdit.Email = model.Email;
-            configEdit.Describe = model.Describe;
-            configEdit.Address = model.Address;
-            configEdit.Logo = filename;
+                string filename = "no-image.png";
+                if (logo != null && !string.IsNullOrEmpty(logo.FileName))
+                {
+                    filename = DateTime.Now.ToString("MMddyyyyhhmmss") + logo.FileName;
+
+                    var path = Path.Combine(this.ihostingEnvironment.WebRootPath, "Logo",
+                        filename);
+
+                    var stream = new FileStream(path, FileMode.Create);
+                    logo.CopyToAsync(stream);
+
+                }
 
 
-            _db.Entry(configEdit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                configEdit.RecordNumber = model.RecordNumber;
+                configEdit.Phone = model.Phone;
+                configEdit.Name = model.Name;
+                configEdit.Mobile = model.Mobile;
+                configEdit.Email = model.Email;
+                configEdit.Describe = model.Describe;
+                configEdit.Address = model.Address;
+                configEdit.Logo = filename;
 
-            _db.SaveChanges();
+
+                _db.Entry(configEdit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                _db.SaveChanges();
+            }
+           
             return RedirectToAction("index");
         }
 

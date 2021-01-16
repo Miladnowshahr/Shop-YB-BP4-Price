@@ -19,3 +19,10 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+@section Script{ 
+    <script>
+        tinymce.init({
+            selector: "#terms"
+        });
+    </script>
+}

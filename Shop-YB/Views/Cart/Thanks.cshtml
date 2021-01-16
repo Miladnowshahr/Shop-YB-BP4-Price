@@ -1,4 +1,4 @@
-﻿
+﻿@model int
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
@@ -9,12 +9,16 @@
 }
 
 
+<div class="row" style="height:400px;background-color:white;">
+    <div class="col-lg-6"style="margin-left:auto;margin-right:auto;padding:2rem 1rem">
+        <div class="alert alert-success text-center" >
+            <h4>از حسن انتخاب  شما متشکریم</h4>
+            <h5>خرید شما با موفقیت انجام شد</h5>
+            <h6> شماره فاکتور شما : @Model</h6>
 
-    <div style="height:500px;background-color:white">
-        <h3>از اعتماد شما متشکریم</h3>
-        <h4> کد پیگیری: @ViewBag.RefCode</h4>
-        <h4> کد پیگیری: @TempData["RefCode"]</h4>
-
+        </div>
     </div>
+</div>
+   
 
 <a asp-controller="home" asp-action="index" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>

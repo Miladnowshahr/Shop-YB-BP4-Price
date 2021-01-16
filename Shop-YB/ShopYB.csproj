@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -587,13 +587,6 @@
     <Content Include="wwwroot\admin\bower_components\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="wwwroot\admin\bower_components\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="wwwroot\admin\bower_components\font-awesome\HELP-US-OUT.txt" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\.bower.json" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\bower.json" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.css" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.min.css" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.print.css" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.print.min.css" />
-    <Content Include="wwwroot\admin\bower_components\fullcalendar\LICENSE.txt" />
     <Content Include="wwwroot\admin\bower_components\inputmask\.bower.json" />
     <Content Include="wwwroot\admin\bower_components\inputmask\bower.json" />
     <Content Include="wwwroot\admin\bower_components\ion.rangeSlider\.bower.json" />
@@ -4801,87 +4794,6 @@
     <None Include="wwwroot\admin\bower_components\font-awesome\scss\_screen-reader.scss" />
     <None Include="wwwroot\admin\bower_components\font-awesome\scss\_stacked.scss" />
     <None Include="wwwroot\admin\bower_components\font-awesome\scss\_variables.scss" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\CHANGELOG.md" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\CONTRIBUTING.md" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.min.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\gcal.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\gcal.min.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale-all.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\af.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar-dz.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar-kw.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar-ly.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar-ma.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar-sa.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar-tn.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ar.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\be.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\bg.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\bs.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ca.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\cs.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\da.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\de-at.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\de-ch.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\de.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\el.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\en-au.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\en-ca.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\en-gb.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\en-ie.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\en-nz.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\es-do.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\es-us.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\es.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\et.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\eu.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\fa.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\fi.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\fr-ca.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\fr-ch.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\fr.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\gl.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\he.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\hi.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\hr.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\hu.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\id.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\is.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\it.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ja.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ka.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\kk.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ko.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\lb.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\lt.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\lv.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\mk.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ms-my.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ms.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\nb.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\nl-be.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\nl.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\nn.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\pl.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\pt-br.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\pt.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ro.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\ru.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\sk.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\sl.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\sq.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\sr-cyrl.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\sr.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\sv.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\th.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\tr.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\uk.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\vi.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\zh-cn.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\zh-hk.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\dist\locale\zh-tw.js" />
-    <None Include="wwwroot\admin\bower_components\fullcalendar\README.md" />
     <None Include="wwwroot\admin\bower_components\inputmask\dist\inputmask\bindings\inputmask.binding.js" />
     <None Include="wwwroot\admin\bower_components\inputmask\dist\inputmask\dependencyLibs\inputmask.dependencyLib.jqlite.js" />
     <None Include="wwwroot\admin\bower_components\inputmask\dist\inputmask\dependencyLibs\inputmask.dependencyLib.jquery.js" />
@@ -6803,36 +6715,40 @@
   </ItemGroup>
 
   <ItemGroup>
+	  
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
-    <PackageReference Include="jsreport.AspNetCore" Version="2.0.2" />
-    <PackageReference Include="jsreport.Binary" Version="2.5.0" />
-    <PackageReference Include="jsreport.Local" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="jsreport.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
+   
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.6.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
-    <PackageReference Include="PARSGREEN.CORE" Version="1.4.5" />
-    <PackageReference Include="SmartBreadcrumbs" Version="2.1.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
-    <PackageReference Include="TinyMCE" Version="5.0.15" />
-    <PackageReference Include="Twilio" Version="5.32.0" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="7.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+    <PackageReference Include="Microsoft.NET.Sdk.Razor" Version="3.1.7" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="PARSGREEN.CORE" Version="1.4.7" />
+    <PackageReference Include="SmartBreadcrumbs" Version="3.5.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="TinyMCE" Version="5.4.2" />
+    <PackageReference Include="Twilio" Version="5.46.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
     <PackageReference Include="zarinpalsandbox" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="wwwroot\admin\bower_components\fullcalendar\dist\fullcalendar.d.ts" />
     <TypeScriptCompile Include="wwwroot\admin\bower_components\moment\moment.d.ts" />
   </ItemGroup>
 

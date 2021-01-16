@@ -57,7 +57,25 @@ namespace Shop_YB.Controllers
 
             ViewBag.LatestProducts = db.Products.OrderByDescending(o => o.Id).Where(p => p.Status).Take(6).ToList();
 
-            ViewBag.MaxSales = db.InvoiceDetails.GroupBy(x => x.Product).Select(x => new { productId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).Select(x => x.productId);
+          
+            var query = (from p in db.InvoiceDetails
+                         group p by p.ProductId into g
+                         select new
+                         {
+                             g.Key,
+                             Count = g.Count()
+                         }
+                         
+                       ).OrderByDescending(o=>o.Count).Select(s=>s.Key).ToList();
+
+
+            var product = (from p in db.Products
+                           where query.Contains(p.Id)
+                           select p).ToList();
+
+            //.OrderByDescending(o => o.Count).Select(s => s.).ToList();
+            ViewBag.MaxSales = product;
+           // ViewBag.MaxSales =db.InvoiceDetails.Count()==0?new List<Product>(): db.InvoiceDetails.GroupBy(x => x.Product).Select(x => new { productId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).Select(x => x.productId).ToList();
 
             ViewBag.Basket = TempData["Basket"];
             return View();

@@ -83,7 +83,7 @@
 
                 <tr>
                     <td colspan="5" style="text-align:right">جمع تخفیف:	</td>
-                    <td class="text-danger"> @discountSum.ToString("#,##") <span>ریال</span></td>
+                    <td class="text-danger"> @(discountSum==null?0.ToString():discountSum.ToString("#,##")) <span>ریال</span></td>
 
                 </tr>
                 <tr>

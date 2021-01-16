@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAUHhzItl8G0yO6SNJo3zgLgAAAAACAAAAAAAQZgAAAAEAACAAAADeppQXnWsBaj1vMKPMl14//Q/OTsEGnvFDa5S1D5s1EwAAAAAOgAAAAAIAACAAAABIewChI3rJ7wRFUfWxvE6ORbxBXIi/hYQJPvlJ1fNovCAAAADmf7eJ0CUC/Xlspbr/OD9OKfVr8HH0DuJaFRMm1/WHh0AAAAA4RuFK7UnKTOvhrff1p0ZzgpGgbu2sjOchzgMhiIVXo0H8vIFrcwL5njNxZOOWJeZwquAYm0B4NMurh1k7mNrW</EncryptedPassword>
+    <_PublishTargetUrl>ftp://miladnowshahr@www.gilshargh.somee.com/www.gilshargh.somee.com/</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.json">
+      <publishTime>08/14/2019 19:06:12</publishTime>
+    </File>
+    <File Include="BCrypt.Net-Core.dll">
+      <publishTime>12/20/2018 15:32:44</publishTime>
+    </File>
+    <File Include="Castle.Core.dll">
+      <publishTime>10/10/2017 08:13:52</publishTime>
+    </File>
+    <File Include="dotnet-aspnet-codegenerator-design.dll">
+      <publishTime>09/24/2019 19:58:14</publishTime>
+    </File>
+    <File Include="jsreport.AspNetCore.dll">
+      <publishTime>08/10/2019 16:58:20</publishTime>
+    </File>
+    <File Include="jsreport.Client.dll">
+      <publishTime>03/28/2019 13:33:10</publishTime>
+    </File>
+    <File Include="jsreport.Local.dll">
+      <publishTime>08/05/2019 18:08:24</publishTime>
+    </File>
+    <File Include="jsreport.Shared.dll">
+      <publishTime>02/12/2019 11:53:40</publishTime>
+    </File>
+    <File Include="jsreport.Types.dll">
+      <publishTime>08/01/2019 19:19:20</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Http.dll">
+      <publishTime>01/24/2019 23:18:54</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Mvc.Core.dll">
+      <publishTime>04/19/2019 23:24:44</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.CSharp.Workspaces.dll">
+      <publishTime>08/11/2019 21:01:00</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.Workspaces.dll">
+      <publishTime>08/11/2019 21:00:52</publishTime>
+    </File>
+    <File Include="Microsoft.DotNet.PlatformAbstractions.dll">
+      <publishTime>08/14/2019 18:53:56</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Abstractions.dll">
+      <publishTime>06/18/2019 21:21:18</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Design.dll">
+      <publishTime>06/18/2019 21:21:54</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.dll">
+      <publishTime>06/18/2019 21:21:26</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Proxies.dll">
+      <publishTime>06/18/2019 21:21:28</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Relational.dll">
+      <publishTime>06/18/2019 21:21:34</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.SqlServer.dll">
+      <publishTime>06/18/2019 21:21:54</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.DependencyModel.dll">
+      <publishTime>08/14/2019 18:54:00</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll">
+      <publishTime>09/24/2019 19:57:40</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll">
+      <publishTime>09/24/2019 19:57:46</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.dll">
+      <publishTime>09/24/2019 19:57:50</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll">
+      <publishTime>09/24/2019 19:57:48</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll">
+      <publishTime>09/24/2019 19:57:42</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll">
+      <publishTime>09/24/2019 19:57:42</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll">
+      <publishTime>09/24/2019 19:57:52</publishTime>
+    </File>
+    <File Include="Microsoft.Win32.SystemEvents.dll">
+      <publishTime>05/15/2018 13:29:34</publishTime>
+    </File>
+    <File Include="NuGet.Frameworks.dll">
+      <publishTime>08/11/2019 21:00:58</publishTime>
+    </File>
+    <File Include="PARSGREEN.CORE.dll">
+      <publishTime>07/19/2019 12:00:50</publishTime>
+    </File>
+    <File Include="Remotion.Linq.dll">
+      <publishTime>08/14/2019 18:53:59</publishTime>
+    </File>
+    <File Include="ShopYB.deps.json">
+      <publishTime>01/10/2020 20:06:34</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

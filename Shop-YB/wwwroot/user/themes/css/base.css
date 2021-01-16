@@ -1,3 +1,26 @@
+@font-face {
+    font-family: "yekan";
+    src: url(/fonts/Yekan.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+{
+    font-family:yekan;
+}
+.dropdown-menu{
+    right:0%;
+    text-align:right;
+    width:600px;
+}
+.menu-link{
+    color:rgba(0, 0, 0, 0.3);
+    text-decoration:none;
+}
+    .menu-link:hover {
+        text-decoration: none;
+        color: #dc3545;
+    }
+
 #mainBody {/* background: url(../images/seperator.png) repeat-x 0 0; */ border-top:2px solid #dedede; padding-top: 18px;}
 #carouselBlk,#header{background: url(../images/headerRepeat.png) repeat-x 0 0 #f7f7f7;}
 #srchFld {
@@ -27,6 +50,7 @@
     text-align:right;
     padding-top:10px;
     margin-bottom:20px;
+    padding-bottom:10px;
   
 }
 .shadow :hover{
@@ -55,12 +79,13 @@
 }
 
 
-
+box-title-v2{
+    text-align:end;
+}
 
 .pagination li.active {
     border: 1px solid #dee2e6;
     background-color: #fff;
-    
     color: black;
 }
 
@@ -148,7 +173,17 @@
 .navbar-search {margin-top: 8px;}
 /* Responsive--------------------- */
 /* Large desktop */
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) {
+    .box-title-v2 {
+        text-align:end;
+    }
+    }
+@media(min-width:980px)
+{
+    .box-title-v2 {
+        text-align: end;
+    }
+}
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
 .navbar .brand {float: none;text-align: center;}
@@ -158,6 +193,9 @@
 #topMenu li{float: none;}
 .navbar .nav > li > a {border-top:1px solid #666; padding:0}
 #sideManu,#topMenu{height:0}
+    .box-title-v2{
+        text-align:center;
+    }
 }
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
@@ -168,6 +206,9 @@
 #topMenu{height: auto;float: none;}
 #topMenu li{float: none;}
 .navbar .nav > li > a {border-top:1px solid #666; padding:0}
+    .box-title-v2 {
+        text-align: center;
+    }
  }
 /* Landscape phones and down */
 @media (max-width: 480px) {
@@ -176,6 +217,10 @@
 #topMenu{height: auto;float: none;}
 #topMenu li{float: none;}
 .navbar .nav > li > a {border-top:1px solid #666; padding:0}
+
+    .box-title-v2{
+        text-align:center;
+    }
 }
 div.showComment div.parentComment {
     float: left;
@@ -209,7 +254,7 @@ span.username_Comment {
 
 span.dateComment {
     float: left;
-    font-family: tahoma;
+    font-family: byekan;
     font-size: 12px;
 }
 
@@ -260,8 +305,9 @@ a.moreComment {
     width: 400px;
     margin: 0 auto;
 }
-.body{
-    font-family:'yekan'!important;
+body{
+    font-family:yekan;
+    overflow-x:hidden;
 }
 
 .modal-header, #modalh4, .close {
@@ -377,9 +423,7 @@ label {
     transition: all .1s linear 0;
 }
 
-body {
-    font-family: "Lucida Sans Unicode";
-}
+
 
 .post {
     position: relative;
@@ -482,6 +526,13 @@ body {
         cursor: pointer;
     }
 
+.card-body {
+    flex: 0.5 1 auto;
+    padding-top: 1.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .card-input-element:checked + .payBox {
     box-shadow: 0 0 2px 2px #0094ff;
 }
@@ -527,7 +578,7 @@ label {
 
 
 .owl-item:hover {
-    box-shadow: 0px 10px 87px;
+   transform:scale(1.1)!important;
 }
 
 .effect8 {
@@ -562,4 +613,54 @@ label {
         transform: skew(8deg) rotate(3deg);
     }
 
-Resources
+.full-width {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+
+
+.footer-badge-container {
+    border-bottom: 1px solid #998f8f;
+    background-color: rgba(209, 216, 221, 0.575);
+}
+
+.footer-badge-wrap {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+    list-style-type: none;
+}
+
+
+
+.footer-badge-item {
+    display: inline-block;
+    width: 19%;
+}
+
+.footer-badge-icon {
+    display: inline-block;
+    line-height: 4rem;
+    font-size: 6rem;
+    color: #cf265b;
+}
+
+.footer-badge-title {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: #222;
+    line-height: 1.6;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.footer-badge-link {
+    display: inline-block;
+    padding: 2rem;
+}

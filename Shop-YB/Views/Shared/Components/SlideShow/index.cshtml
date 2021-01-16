@@ -1,7 +1,7 @@
 ﻿
 
 
-<div id="slideShowCarousel" class="carousel slide carousel-fade boxShadow " data-ride="carousel" style="padding-bottom:70px;">
+<div id="slideShowCarousel" class="carousel slide carousel-fade boxShadow " data-ride="carousel" >
     <div class="carousel-inner">
         @{
             var index = 0;
@@ -10,7 +10,7 @@
             {
             <div class="carousel-item @(index == 0 ? "active" : "")">
                 
-                    <a href="register.html">
+                    <a asp-action="index">
                         <img style="width:100%;height:100%" src="~/SlideShows/@slide.Name" alt="special offers" />
                     </a>
 

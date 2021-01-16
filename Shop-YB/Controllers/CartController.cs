@@ -11,6 +11,7 @@ using PARSGREEN.CORE.RESTful.SMS;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using SmartBreadcrumbs.Attributes;
+using System.Transactions;
 
 namespace Shop_YB.Controllers
 {
@@ -45,6 +46,20 @@ namespace Shop_YB.Controllers
 
             ViewBag.Basket = TempData["Basket"];
             return View();
+        }
+
+        [HttpGet]
+        [Route("GetCountSession")]
+        public virtual ActionResult<int> GetCountSession()
+        {
+            List<Item> cart = SessionHelper.GetObjectFromJson(HttpContext.Session, "cart");
+
+            if (SessionHelper.GetObjectFromJson(HttpContext.Session, "cart") == null)
+            {
+                return 0;
+            }
+            else
+                return cart.Count;
         }
 
 
@@ -250,91 +265,112 @@ namespace Shop_YB.Controllers
 
                 var customer = db.Account.SingleOrDefault(a => a.Username.Equals(user.Value));
 
-                db.Database.EnsureCreated();
-                // crete new Invoice
-                var invoice = new Invoice()
+                using (var dbTrans = db.Database.BeginTransaction())
                 {
-                    Name = "Inv",
-                    Created = DateTime.Now,
-                    Status = 1,
-                    AccountId = customer.Id
-                };
-
-                db.Invoices.Add(invoice);
-
-
-
-
-                //Ship 
-                var ship = new Ship();
-
-                ship.AddressId = model.Id;
-                ship.InvoiceId = invoice.Id;
-
-                ship.Price = (model.TotalPrice > 1500000) ? 0 : 8000;
-                //else
-                if (model.ShipMethod == 3)
-                {
-                    ship.Price = 0;
-                }
-                else if ((model.ShipMethod==4) && ship.Price>1000000) 
-                {
-                    ship.Price = 0;
-                }
-
-                ship.ShipMethod = model.ShipMethod;
-
-
-                db.Ships.Add(ship);
-
-
-
-                //Create invoice Details
-                var invoiceDetials = new List<InvoiceDetails>();
-                List<Item> cart = SessionHelper.GetObjectFromJson(HttpContext.Session, "cart");
-                foreach (var item in cart)
-                {
-                    invoiceDetials.Add(new InvoiceDetails()
+                    try
                     {
-                        InvoiceId = invoice.Id,
-                        ProductId = item.Product.Id,
-                        Price = item.Price,
-                        Quantity = item.Quantity
-                    });
+                        //اضافه کردن فاکتور
+                        var invoice = new Invoice()
+                        {
+                            Name = "Inv",
+                            Created = DateTime.Now,
+                            Status = 1,
+                            AccountId = customer.Id
+                        };
+                        db.Invoices.Add(invoice);
+                        db.SaveChanges();
+
+                        //Ship 
+                        var ship = new Ship();
+
+                        ship.AddressId = model.Id;
+                        ship.InvoiceId = invoice.Id;
+                        //برای خرید های بالای 150 هزار تومن هزینه ارسال رایگان
+                        ship.Price = (model.TotalPrice > 1500000) ? 0 : 8000;
+                        //else
+                        if (model.ShipMethod == 3)
+                        {
+                            ship.Price = 0;
+                        }
+                        else if ((model.ShipMethod == 4) && ship.Price > 1000000)
+                        {
+                            ship.Price = 0;
+                        }
+                        ship.ShipMethod = model.ShipMethod;
+                        db.Ships.Add(ship);
+
+
+                        //Create invoice Details
+                        var invoiceDetials = new List<InvoiceDetails>();
+                        List<Item> cart = SessionHelper.GetObjectFromJson(HttpContext.Session, "cart");
+                        foreach (var item in cart)
+                        {
+                            invoiceDetials.Add(new InvoiceDetails()
+                            {
+                                InvoiceId = invoice.Id,
+                                ProductId = item.Product.Id,
+                                Price = item.Price,
+                                Quantity = item.Quantity
+                            });
+                        }
+                        db.InvoiceDetails.AddRange(invoiceDetials);
+
+                        //Pay
+                        var pay = new Payment()
+                        {
+                            AccountId = customer.Id,
+                            Amount = model.TotalPrice,
+                            InvoiceId = invoice.Id,
+                            PayMethodId = model.Pay,
+                            Status = true,
+                            Date = DateTime.Now
+                        };
+
+                        db.Payments.Add(pay);
+
+                        db.SaveChanges();
+
+                        var phone = db.Addresses.Find(model.Id).Phone;
+
+
+                        dbTrans.Commit();
+
+                        if (model.Pay == 1)
+                        {
+                            ModelState.AddModelError("", "امکان ارتباط با سرور بانک مقدور نمی باشد..");
+                            return View("Payment", model);
+                        }
+                        return RedirectToAction("Thanks", "cart",new { id = invoice.Id });
+                    }
+                    catch (Exception ex)
+                    {
+                        dbTrans.Rollback();
+                    }
                 }
-                db.InvoiceDetails.AddRange(invoiceDetials);
+                return View();
+
+
+
+
+
+
 
                 //zarinpal
 
-                var payonline = new ZarinpalSandbox.Payment(model.TotalPrice);
-                var res = payonline.PaymentRequest($"پرداخت شماره فاکتور {invoice.Id}", "http://localhost:56503/cart/checkPay/" + invoice.Id);
+                //var payonline = new ZarinpalSandbox.Payment(model.TotalPrice);
+                //var res = payonline.PaymentRequest($"پرداخت شماره فاکتور {invoice.Id}", "http://localhost:56503/cart/checkPay/" + invoice.Id);
 
-                if (res.Result.Status == 100)
-                {
-                    return Redirect("https://sandbox.zarinpal.com/pg/startpay/" + res.Result.Authority);
-                }
-                else
-                    return BadRequest();
-
-
+                //if (res.Result.Status == 100)
+                //{
+                //    return Redirect("https://sandbox.zarinpal.com/pg/startpay/" + res.Result.Authority);
+                //}
+                //else
+                //    return BadRequest();
 
 
-                //Pay
-                var pay = new Payment()
-                {
-                    AccountId = customer.Id,
-                    Amount = model.TotalPrice,
-                    InvoiceId = invoice.Id,
-                    PayMethodId = model.Pay,
-                    Status = true,
-                    Date = DateTime.Now
-                };
 
-                db.Payments.Add(pay);
 
-                db.SaveChanges();
 
-                var phone = db.Addresses.Find(model.Id).Phone;
 
                 //twilio
                 //  var sid = "AC740b46957eebd103c79ac49f2b90c6f4";
@@ -349,15 +385,10 @@ namespace Shop_YB.Controllers
                 //);
                 //var res = _message.Sid;
 
-                if (model.Pay==1)
-                {
-                    ModelState.AddModelError("", "امکان ارتباط با سرور بانک مقدور نمی باشد..");
-                    return View("Payment", model);
-                }
-                return RedirectToAction("Thanks", "cart");
+
+
 
             }
-
         }
 
 
@@ -365,7 +396,7 @@ namespace Shop_YB.Controllers
 
         //5
         [Route("thanks")]
-        public IActionResult Thanks()
+        public IActionResult Thanks(int id)
         {
 
             //pasrs green

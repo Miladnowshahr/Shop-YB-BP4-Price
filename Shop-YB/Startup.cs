@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using jsreport.AspNetCore;
-using jsreport.Binary;
-using jsreport.Local;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -53,7 +51,7 @@ namespace Shop_YB
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt =>
             {
-                opt.Cookie.Expiration = TimeSpan.FromHours(5);
+               // opt.Cookie.Expiration = TimeSpan.FromHours(500);
             });
             
            
@@ -67,9 +65,9 @@ namespace Shop_YB
               */
             services.AddSession();
 
-            services.AddMvc();
-            services.AddMvc().AddSessionStateTempDataProvider();
-
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddSessionStateTempDataProvider();
+            
             services.AddBreadcrumbs(GetType().Assembly,option=>
             {
                 option.TagName = "nav";
@@ -80,10 +78,10 @@ namespace Shop_YB
                 option.SeparatorElement = "<li class=\"separator\"> / </li>";
             });
 
-            services.AddJsReport(new LocalReporting()
-              .UseBinary(JsReportBinary.GetBinary())
-              .AsUtility()
-              .Create());
+            //services.AddJsReport(new LocalReporting() 
+            //  .UseBinary(JsReportBinary.GetBinary())
+            //  .AsUtility()
+            //  .Create());
 
 
             var connection = configuration.GetConnectionString("defaultconnection");
@@ -126,22 +124,33 @@ namespace Shop_YB
 
 
 
-
+            app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSession();
             app.UseStaticFiles();
-
-            app.UseMvc(route =>
+            var cookiePolicy = new CookiePolicyOptions
             {
-                //route.MapRoute(
-                //    name: "category",
-                //    template: "product/{id}/{productName}",
-                //    defaults:new { controller="product",action= "Category" });
+                MinimumSameSitePolicy = SameSiteMode.Strict
+            };
+            app.UseCookiePolicy(cookiePolicy);
 
-                route.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=index}/{id?}");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
+            //app.UseMvc(route =>
+            //{
+            //    //route.MapRoute(
+            //    //    name: "category",
+            //    //    template: "product/{id}/{productName}",
+            //    //    defaults:new { controller="product",action= "Category" });
+
+            //    route.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=index}/{id?}");
+            //});
         }
     }
 }
