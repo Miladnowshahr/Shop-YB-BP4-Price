@@ -20,16 +20,19 @@ namespace ShopYB.Controllers
         {
             db = _db;
         }
+
         [Breadcrumb("ViewData.Detail", FromAction = "Category", FromController = typeof(ProductController))]
         public IActionResult Details(int id)
         {
             var model = db.Products.Find(id);
+            if (model == null)
+            {
+                return BadRequest();
+            }
             model.View += 1;
             db.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             db.SaveChanges();
 
-
-          
             ViewBag.Product = model;
             ViewBag.RelatedProducts = db.Products.Where(p => p.CategoryId == model.CategoryId || p.CategoryId == model.Category.ParentId && p.Id != model.Id && p.Status).ToList();
             //comment
@@ -44,23 +47,18 @@ namespace ShopYB.Controllers
                 RelatedProduct = db.Products.Where(p => p.CategoryId == model.CategoryId || p.CategoryId == model.Category.ParentId && p.Id != model.Id && p.Status).ToList()
             };
 
-
-
             // All you have to do now is tell SmartBreadcrumbs about this
             ViewData["Detail"] = model.Name; // Use the last node
             ViewData["Title1"] = model.Category.Name;
-
 
             return View(productDetail);
         }
 
         [Route("category")]
-
         [Breadcrumb("ViewData.Title1", FromAction = "Index", FromController = typeof(HomeController))]
         public IActionResult Category(string keyword, int? categoryId, int? page, int? order)
         {
             var pageNumber = page ?? 1;
-
 
             var lstProduct = new List<Product>();
 
@@ -75,7 +73,6 @@ namespace ShopYB.Controllers
             ViewData["Title1"] = keyword;
             if (categoryId != null)
             {
-
                 lstProduct = lstProduct.Where(x => x.Category.ParentId == categoryId).ToList();
                 var category = db.Category.Find(categoryId);
                 ViewBag.Category = category;
@@ -83,9 +80,8 @@ namespace ShopYB.Controllers
             }
 
             ViewBag.CountProduct = lstProduct.Count();
-
-
-
+            var categories = db.Category.Where(w => w.ParentId == null).ToList();
+            ViewBag.Categories = categories;
             //order by
             order = order ?? 3;
             ViewBag.Order = order;
@@ -94,28 +90,32 @@ namespace ShopYB.Controllers
                 case 1:
                     ViewBag.Products = lstProduct.OrderBy(o => o.Name).ToList().ToPagedList(pageNumber, 8);
                     break;
+
                 case 2:
                     ViewBag.Products = lstProduct.OrderByDescending(o => o.Name).ToList().ToPagedList(pageNumber, 8);
 
                     break;
+
                 case 3:
                 default:
                     ViewBag.Products = lstProduct.OrderByDescending(o => o.Id).ToList().ToPagedList(pageNumber, 8);
 
                     break;
+
                 case 4:
                     ViewBag.Products = lstProduct.OrderBy(o => o.Price).ToList().ToPagedList(pageNumber, 8);
 
                     break;
+
                 case 5:
                     ViewBag.Products = lstProduct.OrderByDescending(o => o.Price).ToList().ToPagedList(pageNumber, 8);
 
                     break;
+
                 case 6:
                     ViewBag.Products = lstProduct.OrderByDescending(o => o.View).ToList().ToPagedList(pageNumber, 8);
 
                     break;
-
             }
 
             //var childNode1 = new MvcBreadcrumbNode("Index", "HomeController",category.Name);
@@ -123,14 +123,8 @@ namespace ShopYB.Controllers
             return View("Category");
         }
 
-
-
-
-
-
         public JsonResult Comment(Comment comment)
         {
-
             var model = new Comment();
             model.Content = comment.Content;
             model.Date_Time = DateTime.Now;
@@ -148,11 +142,8 @@ namespace ShopYB.Controllers
             else
             {
                 return Json(2);
-
             }
         }
-
-
 
         public JsonResult LikeDislike(int id, bool status)
         {
@@ -173,7 +164,6 @@ namespace ShopYB.Controllers
                     db.SaveChanges();
                     return Json(1);
                 }
-
                 else if (query.Status != status)
                 {
                     query.Status = status;
@@ -186,12 +176,7 @@ namespace ShopYB.Controllers
             catch
             {
                 return Json(20);
-
             }
-
-
-
-
         }
     }
 }

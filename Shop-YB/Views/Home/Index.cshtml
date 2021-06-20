@@ -5,12 +5,20 @@
     var discountProduct = (IEnumerable<ShowDPViewModel>)ViewBag.Discount;
     var latestProduct = (IEnumerable<Product>)ViewBag.LatestProducts;
     var mostSales = (IEnumerable<Product>)ViewBag.MaxSales;
-
+    var categories = (IEnumerable<Category>)ViewBag.Categories;
+    //  var slideshow = (IEnumerable<SlideShow>)ViewBag.SlideShow;
+    var productCategory = (IEnumerable<CategoryVM>)ViewBag.ProductCategory;
 }
 @using ShopYB.Models
-
+@using ShopYB.Models.ViewModels
+<!--
 
 <script src="~/user/themes/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+
+
+
+
+
 
 
 
@@ -338,140 +346,484 @@
             </div>
         </div>
 
-    </div>
-
-
-    <!-- Top content -->
-    <script>
-        $("#discountProduct").owlCarousel({
-            loop: false,
-            margin: 1,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                300: {
-                    items: 2
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 4
-                }
+    </div>-->
+<!-- Top content -->
+<!--<script>
+    $("#discountProduct").owlCarousel({
+        loop: false,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            300: {
+                items: 2
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
             }
-        });
-        $('#featureProduct').owlCarousel({
-            loop: true,
-            margin: 1,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                300: {
-                    items: 2
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 4
-                }
-            }
-        });
-        $('#mostSales-carousel').owlCarousel({
-            loop: true,
-            margin: 1,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                300: {
-                    items: 2
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 4
-                }
-            }
-        });
-        $('#latest-carousel').owlCarousel({
-            loop: true,
-            margin: 1,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                300: {
-                    items: 2
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 4
-                }
-            }
-        });
-        $('#specialsuggest').owlCarousel({
-            loop: true,
-            margin: 1,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                300: {
-                    items: 2
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 4
-                }
-            }
-        });
-        var date = document.getElementById("date");
-        $(".timer").each(function () {
-            var time = this.getAttribute("data-time");
-            var target = this.getAttribute("data-element");
-            countdown(time, target);
-            console.log(time);
-        })
-        function countdown(finish_date, target) {
-
-            var x = setInterval(function () {
-                var end = new Date(finish_date).getTime();
-
-                var now = new Date().getTime();
-
-                var distance = end - now;
-
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                $("#" + target).html(days + "  روز  " + hours + "  ساعت  " + minutes + "  دقیقه  " + seconds + " ثانیه  ");
-
-
-                if (distance < 0) {
-                    clearInterval(x);
-                    timer.innerHTML = "ICO Has Ended";
-                }
-            }, 1000);
         }
+    });
+    $('#featureProduct').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            300: {
+                items: 2
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            }
+        }
+    });
+    $('#mostSales-carousel').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            300: {
+                items: 2
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            }
+        }
+    });
+    $('#latest-carousel').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            300: {
+                items: 2
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            }
+        }
+    });
+    $('#specialsuggest').owlCarousel({
+        loop: true,
+        margin: 1,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            300: {
+                items: 2
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 4
+            }
+        }
+    });
+    var date = document.getElementById("date");
+    $(".timer").each(function () {
+        var time = this.getAttribute("data-time");
+        var target = this.getAttribute("data-element");
+        countdown(time, target);
+        console.log(time);
+    })
+    function countdown(finish_date, target) {
 
-        $("#btnBuy").click(function () {
-            alert("hi");
-        });
+        var x = setInterval(function () {
+            var end = new Date(finish_date).getTime();
+
+            var now = new Date().getTime();
+
+            var distance = end - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            $("#" + target).html(days + "  روز  " + hours + "  ساعت  " + minutes + "  دقیقه  " + seconds + " ثانیه  ");
 
 
-    </script>
+            if (distance < 0) {
+                clearInterval(x);
+                timer.innerHTML = "ICO Has Ended";
+            }
+        }, 1000);
+    }
+
+    $("#btnBuy").click(function () {
+        alert("hi");
+    });
+
+
+
+
+
+
+</script>-->
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form action="#">
+                            @*<div class="hero__search__categories">
+                        All Categories
+                        <span class="arrow_carrot-down"></span>
+                    </div>*@
+                            <input type="text" placeholder="چه چیزی نیاز دارید؟" style="float:right;direction:rtl">
+                            <button type="submit" class="site-btn">جستجو</button>
+                        </form>
+                    </div>
+                    @*<div class="hero__search__phone">
+                <div class="hero__search__phone__icon">
+                    <i class="fa fa-phone"></i>
+                </div>
+                <div class="hero__search__phone__text">
+                    <h5>13 33337553</h5>
+                    <span>پشتیبانی 24/7 </span>
+                </div>
+            </div>*@
+                </div>
+                @if (ViewBag.isHome != null)
+                {
+                    @await Component.InvokeAsync("SlideShow")
+
+                }
+
+
+                @*<div class="hero__item set-bg" data-setbg="image/hero/2.jpg">
+                    <div class="hero__text">
+                        <span>خرید بی واسطه</span>
+                        <h2>طبیعی %100</h2>
+                        <p>ارسال به سراسر ایران</p>
+                        <a href="#" class="primary-btn">همین الان خرید کنید</a>
+                    </div>
+                </div>*@
+            </div>
+
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <span>محصولات گیلان</span>
+                        <i class="fa fa-bars"></i>
+                    </div>
+                    <ul>
+                        @foreach (var category in categories)
+                        {
+                            <li><a asp-action="Category" asp-controller="Product" asp-route-categoryId="@category.Id">@category.Name</a></li>
+                        }
+                        
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+
+                @foreach (var category in productCategory)
+                {
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="products/@category.Photo" >
+                            <h5><a href="#">@category.Name</a></h5>
+                        </div>
+                    </div>
+                  
+                }
+                @*<div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="image/categories/cat-2.jpg">
+                        <h5><a href="#">Dried Fruit</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="image/categories/cat-3.jpg">
+                        <h5><a href="#">Vegetables</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="image/categories/cat-4.jpg">
+                        <h5><a href="#">drink fruits</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="image/categories/cat-5.jpg">
+                        <h5><a href="#">drink fruits</a></h5>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>محصولات شگفت انگیز</h2>
+                </div>
+                @*<div class="featured__controls">
+                        <ul>
+                            <li class="active" data-filter="*">All</li>
+                            <li data-filter=".oranges">Oranges</li>
+                            <li data-filter=".fresh-meat">Fresh Meat</li>
+                            <li data-filter=".vegetables">Vegetables</li>
+                            <li data-filter=".fastfood">Fastfood</li>
+                        </ul>
+                    </div>*@
+            </div>
+        </div>
+        <div class="row featured__filter">
+            @foreach (var product in suggestProduct)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="products/@product.Photos.FirstOrDefault(w=>w.Featured).Name">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">@product.Name</a></h6>
+                            <h5><span style="font-size:x-small;display:inline-block">ريال</span><spane>@product.Price.ToString("#,##")</spane></h5>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+<!-- Banner Begin -->
+@*<div class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="image/banner/banner-1.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="image/banner/banner-2.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<!-- Banner End -->
+<!-- Latest Product Section Begin -->
+<section class="latest-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>جدیدترین محصولات</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var product in latestProduct.Skip(0).Take(3))
+                            {
+                                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img style="width:110px;height:110px" src="~/products//@product.Photos.FirstOrDefault(f=>f.Featured).Name" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@product.Name</h6>
+                                        <h5 style="display:inline-flex"><span style="font-size:xx-small"> ريال </span><span>@product.Price.ToString("#,##")</span></h5>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var product in latestProduct.Skip(3*1).Take(3))
+                            {
+                                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img style="width:110px;height:110px" src="~/products//@product.Photos.FirstOrDefault(f=>f.Featured).Name" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@product.Name</h6>
+                                        <h5 style="display:inline-flex"><span style="font-size:xx-small"> ريال </span><span>@product.Price.ToString("#,##")</span></h5>
+                                    </div>
+                                </a>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>محبوب ترین محصولات</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var product in suggestProduct.Skip(0).Take(3))
+                            {
+                                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img style="width:110px;height:110px" src="~/products//@product.Photos.FirstOrDefault(f=>f.Featured).Name" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@product.Name</h6>
+                                        <h5 style="display:inline-flex"><span style="font-size:xx-small"> ريال </span><span>@product.Price.ToString("#,##")</span></h5>
+                                    </div>
+                                </a>
+                            }
+
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var product in suggestProduct.Skip(3*1).Take(3))
+                            {
+                                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img style="width:110px;height:110px" src="~/products//@product.Photos.FirstOrDefault(f=>f.Featured).Name" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@product.Name</h6>
+                                        <h5 style="display:inline-flex"><span style="font-size:xx-small"> ريال </span><span>@product.Price.ToString("#,##")</span></h5>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Review Products</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var product in latestProduct.Skip(0).Take(3))
+                            {
+                                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img style="width:110px;height:110px" src="~/products/@product.Photos.FirstOrDefault(f=>f.Featured).Name" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@product.Name</h6>
+                                        <h5 style="display:inline-flex"><span style="font-size:xx-small" > ريال </span><span>@product.Price.ToString("#,##")</span></h5>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                        <div class="latest-prdouct__slider__item">
+                            @foreach (var product in latestProduct.Skip(3*1).Take(3))
+                            {
+                                <a href="#" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img style="width:110px;height:110px" src="~/products/@product.Photos.FirstOrDefault(f=>f.Featured).Name" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6>@product.Name</h6>
+                                        <h5 style="display:inline-flex"><span style="font-size:xx-small"> ريال </span><span> @product.Price.ToString("#,##")</span></h5>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Product Section End -->
+<!-- Blog Section Begin -->
+@*<section class="from-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title from-blog__title">
+                    <h2>From The Blog</h2>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="image/blog/blog-1.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                            <li><i class="fa fa-comment-o"></i> 5</li>
+                        </ul>
+                        <h5><a href="#">Cooking tips make cooking simple</a></h5>
+                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="image/blog/blog-2.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                            <li><i class="fa fa-comment-o"></i> 5</li>
+                        </ul>
+                        <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
+                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="blog__item">
+                    <div class="blog__item__pic">
+                        <img src="image/blog/blog-3.jpg" alt="">
+                    </div>
+                    <div class="blog__item__text">
+                        <ul>
+                            <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                            <li><i class="fa fa-comment-o"></i> 5</li>
+                        </ul>
+                        <h5><a href="#">Visit the clean farm in the US</a></h5>
+                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+<!-- Blog Section End -->

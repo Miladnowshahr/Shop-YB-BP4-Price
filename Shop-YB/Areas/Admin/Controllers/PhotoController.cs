@@ -13,7 +13,6 @@ namespace ShopYB.Areas.Admin.Controllers
 {
 
     [Authorize(Roles = "admin", AuthenticationSchemes = "Admin_Schema")]
-
     [Area("admin")]
     [Route("admin/photo")]
     public class PhotoController : Controller
@@ -51,7 +50,7 @@ namespace ShopYB.Areas.Admin.Controllers
         [Route("add/{productId}")]
         public IActionResult Add(int productId, Photo model, IFormFile photo)
         {
-            var filename = DateTime.Now.ToString("MMddyyyyhhmmss") + photo.FileName;
+            var filename = Guid.NewGuid().ToString() + "." + photo.FileName.Split(".")[1].ToString();
 
             var path = Path.Combine(this.ihostingEnvironment.WebRootPath, "products",
                 filename);
@@ -110,7 +109,7 @@ namespace ShopYB.Areas.Admin.Controllers
             var model = db.Photos.Find(photoModel.Id);
             if (photo != null && !string.IsNullOrEmpty(photo.FileName))
             {
-                var filename = DateTime.Now.ToString("MMddyyyyhhmmss") + photo.FileName;
+                var filename = Guid.NewGuid().ToString() +"."+ photo.FileName.Split(".")[1].ToString();
 
                 var path = Path.Combine(this.ihostingEnvironment.WebRootPath, "products",
                     filename);

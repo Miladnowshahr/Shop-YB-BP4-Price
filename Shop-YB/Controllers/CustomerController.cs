@@ -37,8 +37,6 @@ namespace ShopYB.Controllers
 
             if (!exists)
             {
-
-
                 account.Password = BCrypt.Net.BCrypt.HashPassword(account.Password);
                 account.Status = true;
                 db.Account.Add(account);
@@ -53,7 +51,6 @@ namespace ShopYB.Controllers
                 db.RoleAccount.Add(roleAccount);
                 db.SaveChanges();
                 return RedirectToAction("login", "Account");
-
             }
             else
             {
@@ -61,7 +58,6 @@ namespace ShopYB.Controllers
                 return View("Register", account);
             }
         }
-
 
         [HttpGet]
         [Route("login")]
@@ -71,13 +67,18 @@ namespace ShopYB.Controllers
 
             if (account != null)
             {
-                securityManager.SignIn(this.HttpContext, account,"User_Schema");
+                securityManager.SignIn(this.HttpContext, account, "User_Schema");
                 var refer = HttpContext.Request.Headers["Referer"].ToString();
+
+                if (!string.IsNullOrEmpty(loginViewModel.ReturnUrl))
+                {
+                    return RedirectToAction(loginViewModel.ReturnUrl);
+                }
                 if (refer.Contains("cart"))
                 {
-                    return RedirectToAction("shipping","cart");
+                    return RedirectToAction("shipping", "cart");
                 }
-                return RedirectToAction("dashboard","customer");
+                return RedirectToAction("dashboard", "customer");
             }
             else
             {
@@ -85,12 +86,10 @@ namespace ShopYB.Controllers
                 if (!refer.Contains("cart"))
                 {
                     ViewBag.error = "نام کاربری یا رمز عبور اشتباه می باشد";
-
                 }
             }
 
             var model = new LoginViewModel();
-
 
             return View("login", model);
         }
@@ -100,9 +99,7 @@ namespace ShopYB.Controllers
         {
             securityManager.SignOut(this.HttpContext, "User_Schema");
             return View("login");
-
         }
-
 
         [HttpGet]
         [Route("accessdenied")]
@@ -114,7 +111,6 @@ namespace ShopYB.Controllers
         private Account ProcessLogin(string username, string password)
         {
             var account = db.Account.SingleOrDefault(a => a.Username.Equals(username) && a.Status == true);
-
 
             if (account != null)
             {
@@ -138,7 +134,6 @@ namespace ShopYB.Controllers
             var customer = db.Account.SingleOrDefault(a => a.Username.Equals(user.Value));
 
             return View(customer);
-
         }
 
         [Authorize(Roles = "customer", AuthenticationSchemes = "User_Schema")]
@@ -159,9 +154,6 @@ namespace ShopYB.Controllers
             return View(curCustomer);
         }
 
-        
-
-
         [Authorize(Roles = "customer", AuthenticationSchemes = "User_Schema")]
         [HttpGet]
         [Route("dashboard")]
@@ -169,9 +161,6 @@ namespace ShopYB.Controllers
         {
             return View();
         }
-
-
-
 
         //Invoice
         [Authorize(Roles = "customer", AuthenticationSchemes = "User_Schema")]
@@ -182,7 +171,7 @@ namespace ShopYB.Controllers
             var user = User.FindFirst(ClaimTypes.Name);
             var customer = db.Account.SingleOrDefault(a => a.Username.Equals(user.Value));
             ViewBag.Invoices = customer.Invoices.ToList();
-            
+
             return View();
         }
 
@@ -191,21 +180,16 @@ namespace ShopYB.Controllers
         [Route("details/{id}")]
         public IActionResult Details(int id)
         {
-
             ViewBag.InvoiceDetails = db.InvoiceDetails.Where(x => x.InvoiceId == id).ToList();
             return View();
         }
 
-
         [HttpGet]
-        
         public JsonResult Detail(int id)
         {
-
             var model = db.InvoiceDetails.Where(x => x.InvoiceId == id).ToList();
             return Json(model);
         }
-
 
         public int AddAddress(Address address)
         {

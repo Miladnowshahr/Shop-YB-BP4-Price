@@ -10,340 +10,315 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
-    <meta charset="utf-8">
-    <title>فروشگاه گیل شرق</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>گیلشرق</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
-    <link href="~/user/themes/css/base.css" rel="stylesheet" />
-
-    <link href="~/user/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
-    <!-- fav and touch icons -->
-    <link rel="shortcut icon" href="~/user/themes/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/user/themes/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/user/themes/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/user/themes/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="~/user/themes/images/ico/apple-touch-icon-57-precomposed.png">
-    <style type="text/css" id="enject"></style>
-    <link href="~/user/materialdesignicons.css" rel="stylesheet" />
-
-
-
-
-
-    @*<link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
-        <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />*@
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/style.css" type="text/css">
 </head>
-<body dir="rtl">
-    <div id="header">
-        <div class="container">
 
-            @*@await Component.InvokeAsync("CartTop")*@
+<body style="overflow-x:hidden">
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="#"><img src="~/image/logo.png" alt=""></a>
+        </div>
+        <div class="humberger__menu__cart">
+            <ul>
+                <li><a href="#"><i class="fa fa-heart"></i> <span>0</span></a></li>
+                <li><a asp-controller="cart" asp-action="index"><i class="fa fa-shopping-bag"></i> <span>0</span></a></li>
+            </ul>
+            <div class="header__cart__price">item: ریال<span>0</span></div>
+        </div>
+        <div class="humberger__menu__widget">
+            @*<div class="header__top__right__language">
+                    <img src="image/language.png" alt="">
+                    <div>English</div>
+                    <span class="arrow_carrot-down"></span>
+                    <ul>
+                        <li><a href="#">Spanis</a></li>
+                        <li><a href="#">English</a></li>
+                    </ul>
+                </div>*@
+            <div class="header__top__right__auth">
+                <a href="#"><i class="fa fa-user"></i> ورود</a>
+            </div>
+        </div>
 
-            <!-- Navbar ================================================== -->
-
-            <nav class="navbar navbar-expand-lg  navbar-dark fixed-top" style="background-color: #df2537; box-shadow: 0px 1px 10px #000;">
-                <a class="navbar-brand" asp-controller="home" asp-action="index"><img src="~/Logo/@config.Logo" width="90px" /></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-2">
-
-
-                        <li class="nav-item active dropdown ">
-                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                چای
-                            </a>
-                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                <div class="row">
-                                    <ul class="col-lg-4" style="list-style-type:none;padding:0.5rem 3rem;line-height:3">
-
-                                        <li><a class="menu-link" asp-controller="product" asp-action="category" asp-route-categoryId="1"> <span id="chai_ghalam"> چای سیاه</span></a>  </li>
-                                        <li><a class="menu-link" asp-action="" asp-route-id=""> <span id="chai_sabz"> چای سبز</span></a></li>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li class="active"><a href="./index.html">Home</a></li>
+                <li><a href="./shop-grid.html">Shop</a></li>
+                <li>
+                    <a href="#">Pages</a>
+                    <ul class="header__menu__dropdown">
+                        <li><a href="./shop-details.html">Shop Details</a></li>
+                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                        <li><a href="./checkout.html">Check Out</a></li>
+                        <li><a href="./blog-details.html">Blog Details</a></li>
+                    </ul>
+                </li>
+                <li><a href="./blog.html">Blog</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><i class="fa fa-envelope"></i> info@gilshargh.ir</li>
+                <li>ارسال رایگان برای مبالغ 100 هزار تومان</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> info@gilshargh.ir</li>
+                                <li style=" float: right; color: chocolate; font-weight: 700;font-family:sans-serif">ارسال رایگان برای سفارش های بالای 100 هزار تومان</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            </div>
+                            @*<div class="header__top__right__language">
+                                    <img src="image/language.png" alt="">
+                                    <div>English</div>
+                                    <span class="arrow_carrot-down"></span>
+                                    <ul>
+                                        <li><a href="#">Spanis</a></li>
+                                        <li><a href="#">English</a></li>
                                     </ul>
-                                    <div class="col-lg-8">
-                                        <img id="img_ghalam" style="display:none" class="img-responsive img-rounded" height="200px" src="/products/09182019075502چای قلم.png" />
-                                        <img id="img_sabz" class="img-responsive" style="display:none" height="200px" src="~/products/09182019113306چای شکسته.jpg" />
-
-                                    </div>
-                                </div>
-
-
-
-                                @*<a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">چای سیاه قلم</a>
-                                    <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">چای سیاه ممتاز</a>
-                                    <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="2">چای سبز</a>*@
-                            </div>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" asp-controller="home" asp-action="index">برنج<span class="sr-only">(current)</span></a>
-                        </li>
-
-
-                        <li class="nav-item active dropdown ">
-                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                خشکبار شمال
-                            </a>
-                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">بادام زمینی</a>
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">فندق</a>
-                            </div>
-                        </li>
-                        <li class="nav-item active dropdown ">
-                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                سایر محصولات
-                            </a>
-                            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="1">عرقیجات</a>
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="9">زعفران</a>
-                                <a class="dropdown-item" asp-controller="product" asp-action="category" asp-route-categoryId="2">دمنوش</a>
-                            </div>
-                        </li>
-
-                    </ul>
-                    <ul class="navbar-nav mr-auto">
-
-                       
-                            <li class="nav-item mr-auto">
-
-                                <a class="nav-link" href="#">
-                                    سبد خرید من (
-                                    <span id="mybasket"></span>)
-                                </a>
-                            </li>
-
-                        
-
-
-                        @if (user == null || role.Value == "admin")
-                        {
-                            <li class="">
-                                <a href="#myModal" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">ورود</a>
-
-                            </li>
-                        }
-                        else if (user != null && role.Value == "customer")
-                        {
-
-                            <li class="ml-4">
-                                <a asp-controller="customer" class="nav-link" asp-action="dashboard" role="button">
-                                    <span>خوش آمدید @user.Value</span>
-                                </a>
-                            </li>
-
-                            <li class="mr-2"><a asp-controller="customer" class="btn btn-outline-danger" asp-action="signout">خروج</a></li>
-
-                        }
-                    </ul>
-                    @*<form class="form-inline my-2 my-lg-0 mr-auto ">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>*@
-                </div>
-            </nav>
-
-        </div>
-    </div>
-    <!-- Header End====================================================================== -->
-    <div style="padding-top:58px;">
-        @if (ViewBag.isHome != null)
-        {
-            @await Component.InvokeAsync("SlideShow")
-
-        }
-    </div>
-
-
-    <div id="mainBody" style="background-color:#dbdbdb">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12" dir="rtl" style="padding-bottom:20px;">
-                    @if (ViewBag.IsHome == null)
-                    {
-                        <breadcrumb></breadcrumb>
-                    }
-
-
-                    @RenderBody()
-
-                </div>
-                <!-- Sidebar ================================================== -->
-                @*<div id="sidebar" class="span3">
-
-                        @if (ViewBag.Ship == null)
-                            {
-
-                                <div class="well well-small">
-                                    @await Component.InvokeAsync("CartLeft")
-                                </div>
-
-                                @await Component.InvokeAsync("Category")
-                                <br />
-
-                                @await Component.InvokeAsync("LatestProducts")
-                            }
-                            else
-                            {
-                                @await Component.InvokeAsync("SidePrice")
-                            }
-                    </div>*@
-                <!-- Sidebar end=============================================== -->
-
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <!-- Footer ================================================================== -->
-    <div id="footerSection" style="padding-bottom:10px;margin-top:0px!important">
-        <div class="container">
-            <div class="row">
-
-
-                <div class="col-lg-3" style="text-align:center">
-                    <h5>حساب کاربری</h5>
-                    <a href="login.html">حساب شما</a>
-                    <a href="login.html">پروفایل</a>
-                    <a href="login.html">افزودن آدرس</a>
-                    <a href="login.html">تایخچه خرید</a>
-                </div>
-                <div class="col-lg-3" style="text-align:center">
-                    <h5>اطلاعات</h5>
-                    <a asp-controller="home" asp-action="contactus">ارتباط با ما</a>
-                    <a asp-action="Register" asp-controller="customer">عضویت</a>
-                    <a asp-action="termPolicy" asp-controller="home">قوانین و شرایط خرید</a>
-                </div>
-                <div class="col-lg-3" style="text-align:center">
-                    <h5>پشتیبانی</h5>
-                    <a href="#">@config?.Address</a>
-                    <a href="#">@config?.Phone.ToString()</a>
-
-                </div>
-                <div class="col-lg-3" id="socialMedia" style="text-align:center">
-                    <h5>شبکه های اجتماعی </h5>
-                    <a href="#"><img width="60" height="60" src="~/user/themes/images/facebook.png" title="facebook" alt="facebook" /></a>
-                    <a href="#"><img width="60" height="60" src="~/user/themes/images/twitter.png" title="twitter" alt="twitter" /></a>
-                    <a href="#"><img width="60" height="60" src="~/user/themes/images/youtube.png" title="youtube" alt="youtube" /></a>
-                </div>
-            </div>
-            <hr />
-            <p style="text-align:center;">&copy; طراحی و توسعه توسط میلاد نعمت پور</p>
-        </div><!-- Container End -->
-    </div>
-    <!-- Placed at the end of the document so the pages load faster ============================================= -->
-    <!-- Modal Login ============================================= -->
-
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">ورود</h5>
-                    <button type="button" class="close pull-left" style="padding:0px;margin:0px;" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form class="form-horizontal loginFrm" method="get" asp-controller="customer" asp-action="login">
-                    <div class="modal-body">
-
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">نام کاربری</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                                </div>*@
+                            <div class="header__top__right__auth">
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <a href="#" class="btn" style="background-color:#7fad39;color:#fff" onclick="showUserPanel()">@User.Identity.Name</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn" style="background-color:#7fad39;color:#fff" onclick="showUserLoginPanel()"><i class="fa fa-user"></i> ورود</a>
+                                }
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">گذرواژه</label>
-                            <div class="col-sm-8">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                            </div>
-                        </div>
-
-
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">ورود</button>
-                        <a asp-controller="customer" asp-action="register" class="btn btn-danger">ثبت نام</a>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">خروج</button>
-
-                    </div>
-                </form>
+                </div>
             </div>
-
         </div>
-    </div>
+        <div class="userPanel" dir="rtl" id="userPanel">
+            <div class="" style="height:40px">
+                <span><i class="fa fa-user-circle" style="font-size:xxx-large;vertical-align:middle"></i> <span style="padding-right:10px">میلاد نعمت پور</span></span>
+            </div>
+            <hr class="soft" />
+            <a href="" class="user-panel-link">
+                <i class="fa fa-list" style="font-size:x-large;vertical-align:middle"></i><span style="padding-right:10px">سفارش های من</span>
+            </a>
+            <hr class="soft" />
+            <a asp-controller="Customer" asp-action="Signout" class="user-panel-link-signout"><i class="fa fa-user-times" style="font-size:x-large;vertical-align:middle"></i> <span style="padding-right:10px">خروج</span></a>
+        </div>
 
+        <div class="userLoginPanel" dir="rtl" id="userLoginPanel">
+            <form class="pull-right" method="get" asp-controller="Customer" asp-action="Login">
+                <input type="hidden" name="returnUrl" value="Home" />
+                <label>نام کاربری</label>
+                <input type="text" class="form-control" name="userName" />
 
+                <label>رمز عبور</label>
+                <input type="password" class="form-control" name="password" />
+                <button type="submit" class="btn" style="background-color:#7fad39;color:#fff;text-align:end;float:left;margin-top:10px">تایید</button>
+            </form>
+        </div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul style="margin-right:50px">
+                            <li><a href="#"><i class="fa fa-heart"></i> <span id="wishList">0</span></a></li>
+                            <li><a asp-controller="cart" asp-action="index"><i class="fa fa-shopping-bag"></i> <span id="countOfPrice">0</span></a></li>
+                        </ul>
+                        <div class="header__cart__price" style="direction:rtl;float:left">جمع: <span id="totalPrice">0</span> &nbsp; ريال </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu" style="direction:rtl;float:right">
+                        <ul>
+                            <li class="active"><a href="/">صفحه اصلی</a></li>
+                            <li><a href="./shop-grid.html">خرید</a></li>
+                            @*<li>
+                                    <a href="#">Pages</a>
+                                    <ul class="header__menu__dropdown">
+                                        <li><a href="./shop-details.html">Shop Details</a></li>
+                                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                                        <li><a href="./checkout.html">Check Out</a></li>
+                                        <li><a href="./blog-details.html">Blog Details</a></li>
+                                    </ul>
+                                </li>*@
+                            <li><a href="./blog.html">مقاله</a></li>
+                            <li><a href="./contact.html">تماس با ما</a></li>
+                        </ul>
+                    </nav>
+                </div>
 
-    <!-- Script ============================================= -->
+                <div class="col-lg-3">
+                    <div class="header__logo" style="float:right">
+                        <a href="./index.html"><img src="~/image/logo.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
 
-    <script src="~/user/themes/js/google-code-prettify/prettify.js"></script>
-    <script>
-        $("#chai_ghalam").hover(function () {
-            $("#img_ghalam").show();
-            $("#img_momtaz").hide();
-            $("#img_sabz").hide();
+    @RenderBody()
+    <!-- Footer Section Begin -->
+    <footer class="footer spad" style="">
+        <div class="container">
+            <div class="row" style="direction:rtl">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__about" style="text-align:right">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><img src="~/image/logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>آدرس :رشت - میدان امام حسین(ع)</li>
+                            <li>تلفن: 33841622-13</li>
+                            <li>پست الکترونیک: info@gilshargh.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__widget" style="direction:rtl;text-align:start;">
+                        <h6>لینک های مفید</h6>
+                        <ul>
+                            <li><a href="#">درباره ما</a></li>
+                            <li><a href="#">درباره فروشگاه</a></li>
+                            <li><a href="#">خرید امن</a></li>
+                            <li><a href="#">اطلاعات مرسوله</a></li>
+                            <li><a href="#">قوانین فروشگاه</a></li>
+                        </ul>
+                        @*<ul>
+                                <li><a href="#">پروفایل</a></li>
+                                <li><a href="#">خدمات ما</a></li>
+                                <li><a href="#">پروژه </a></li>
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">Innovation</a></li>
+                                <li><a href="#">Testimonials</a></li>
+                            </ul>*@
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>اطلاع از جدیدترین خبرها و تخفیف</h6>
+                        @* <p>Get E-mail updates about our latest shop and special offers.</p>*@
+                        <form action="#">
+                            <input type="text" placeholder="ایمیل خود را وارد نمائید">
+                            <button type="submit" class="site-btn">پیوستن</button>
+                        </form>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | Made  <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://miladnowshahr.ir" target="_blank">Milad Nematpour</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                        <div class="footer__copyright__payment"><img src="~/image/payment-item.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+    <!-- Js Plugins -->
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/jquery.slicknav.js"></script>
+    <script src="~/js/mixitup.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/main.js"></script>
 
-        });
-        $("#chai_momtaz").hover(function () {
-            $("#img_ghalam").hide();
-            $("#img_momtaz").show();
-            $("#img_sabz").hide();
-
-        });
-        $("#chai_sabz").hover(function () {
-            $("#img_ghalam").hide();
-            $("#img_momtaz").hide();
-            $("#img_sabz").show();
-
-        });
-
-    </script>
-
-    @*<script src="~/user/themes/js/jquery.lightbox-0.5.js"></script>*@
-    @RenderSection("script", false)
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script>
         $(document).ready(function () {
-            basket();
-        })
-        function basket() {
 
-            $.ajax({
-                method: 'Get',
-                url: '/cart/GetCountSession',
-                success: function (data) {
-                    $("#mybasket").html(data);
-                },
-                error: (function (data) {
-                    console.log(data);
-                })
-            })
+            let countOfOrder = localStorage.getItem("countofPrice");
+            let totalPrice = localStorage.getItem("totalPrice");
+            let wishList = localStorage.getItem("whishlist");
+            console.log(countOfOrder);
+
+            $("#countOfPrice").html(countOfOrder);
+            $("#totalPrice").html(totalPrice);
+            $("#wishList").html(wishList);
+
+        });
+
+        function showUserPanel() {
+            $("#userPanel").toggle(function () {
+                $("#userPanel").css("opacity", 1);
+            });
         }
 
+        function showUserLoginPanel() {
+            $("#userLoginPanel").toggle(function () {
+                $("#userLoginPanel").css("opacity", 1);
+            });
+        }
     </script>
 </body>
 </html>

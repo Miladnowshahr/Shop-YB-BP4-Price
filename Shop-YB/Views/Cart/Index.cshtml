@@ -1,6 +1,5 @@
 ﻿@using System.Security.Claims;
 
-
 @{
     var role = User.FindFirst(ClaimTypes.Role);
     var user = User.FindFirst(ClaimTypes.Name);
@@ -8,126 +7,135 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     int sum = 0;
     int discountSum = 0;
+    var orders = (IEnumerable<ShopYB.Models.Item>)ViewBag.Cart;
+
 }
+@if (orders == null)
+{
 
+    <div class="container" style="min-height:80vh;display:flex;align-items:center;justify-content:center;">
+        <div class="row" dir="rtl">
+            <div class="col-12" style="">
 
-
-<div style="background-color:white">
-
-
-    @if (ViewBag.Cart == null)
-    {
-        <h3>سبد شما خالی است</h3>
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-lg-6">
-                <h3 class="pull-right" style="margin:10px 30px;">
-                    سبد خرید [ <small>@ViewBag.CountItems محصول </small>]
-                </h3>
-            </div>
-
-            <div class="col-lg-6" style="margin-top: auto; padding-left: 30px;">
-                <a asp-controller="home" class="btn btn-large btn-info"><i class="icon-arrow-left"></i> ادامه خرید </a>
+                <h3 style="display: flex; justify-content: center;margin-top:100px; margin-bottom: 100px;align-items:center"><i class="fa fa-shopping-basket" style="font-size:5em;margin:.2em;opacity:.7"></i>سبد شما خالی است</h3>
 
             </div>
-
-
-
         </div>
+    </div>
 
-        <hr class="soft" />
+}
+else
+{
+    <div class="container" style="">
+        <div class="row" dir="rtl">
+            <div class="col-12" style="">
 
-        <table class="table table-bordered table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>محصول</th>
-                    <th>توضیحات</th>
-                    <th>تعداد</th>
-                    <th>قیمت</th>
-                    <th>تخفیف</th>
-                    <th>جمع</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var cart in (IEnumerable<ShopYB.Models.Item>)ViewBag.Cart)
-                {
-
-                    var totalPrice = cart.Price * cart.Quantity;
-                    sum += totalPrice;
-                    var totalDiscount = cart.BasePrice * cart.Quantity;
-                    discountSum += totalDiscount;
-                    <tr>
-                        <td> <img width="60" src="~/products/@cart.PhotoName" alt="" /></td>
-                        <td>@cart.Product.Name<br />Color : , Material : </td>
-                        <td>
-                            <div class="input-append">
-                                <button class="btn btn-primary minus" type="button" style="font-size:8pt"><i class="fa fa-minus"></i></button>
-                                <input class="span1 quantity" style="max-width:34px" value="@cart.Quantity" id="appendedInputButtons" data-id="@cart.Product.Id" size="16" type="text">
-
-                                <button class="btn btn-primary plus" type="button" id="plus" style="font-size:8pt"><i class="fa fa-plus"></i></button>
-                                <a class="btn btn-danger" asp-controller="cart" asp-action="remove" asp-route-id="@cart.Product.Id"><i class="fa fa-trash"></i></a>
-                            </div>
-                        </td>
-                        <td>@cart.Price.ToString("#,##")<span>ریال</span> </td>
-                        <td>@cart.BasePrice.ToString("#,##")<span>ریال</span></td>
-                        <td id="totalPrice">@((cart.Price * cart.Quantity).ToString("#,##")) <span>ریال</span> </td>
-                    </tr>
-                }
-                <tr>
-                    <td colspan="5" style="text-align:right">جمع کل:	</td>
-                    <td> @sum.ToString("#,##") <span>ریال</span> </td>
-                </tr>
-
-
-                <tr>
-                    <td colspan="5" style="text-align:right">جمع تخفیف:	</td>
-                    <td class="text-danger"> @(discountSum==null?0.ToString():discountSum.ToString("#,##")) <span>ریال</span></td>
-
-                </tr>
-                <tr>
-
-                    <td colspan="5" style="text-align:right"><strong>جمع</strong></td>
-                    <td class="label label-important" style="display:block"> <strong> @sum.ToString("#,##") <span>ریال</span> </strong></td>
-                </tr>
-
-
-
-            </tbody>
-        </table>
-
-        <div class="row">
-            <div class="col-lg-12" style="float:right;text-align: justify;padding: 10px 40px;">
-                <form class="form">
-                    <div class="control-group">
-                        <label class="control-label"><strong> کد تخفیف: </strong> </label>
-                        <div class="controls">
-                            <input type="text" class="input-medium" placeholder="کد">
-                            <button type="submit" class="btn btn-success"> اعمال کردن </button>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3 class="pull-right" style="margin:10px 30px;">
+                            سبد خرید [ <small>@ViewBag.CountItems محصول </small>]
+                        </h3>
                     </div>
-                </form>
+
+                    <div class="col-lg-6" style="margin-top: auto; padding-left: 30px;">
+                        <a asp-controller="home" class="btn btn-large btn-info"><i class="icon-arrow-left"></i> ادامه خرید </a>
+                    </div>
+                </div>
+
+                <hr class="soft" />
+
+                <table class="table table-bordered table-hover table-striped" style="text-align:center">
+                    <thead>
+                        <tr>
+                            <th>محصول</th>
+                            <th>توضیحات</th>
+                            <th>تعداد</th>
+                            <th>قیمت</th>
+                            <th>تخفیف</th>
+                            <th>جمع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cart in orders)
+                        {
+
+                            var totalPrice = cart.Price * cart.Quantity;
+                            sum += totalPrice;
+                            var totalDiscount = cart.BasePrice * cart.Quantity;
+                            discountSum += totalDiscount;
+                            <tr>
+                                <td> <img width="60" src="~/products/@cart.PhotoName" alt="" /></td>
+                                <td>@cart.Product.Name<br /></td>
+                                <td>
+                                    <div class="input-append">
+                                        <button class="btn btn-outline-danger minus" type="button" style="font-size:12pt"><i class="fa fa-minus"></i></button>
+
+                                        <input class="form-control span1 quantity" style="max-width:50px;display:inline-block !important"
+                                               value="@cart.Quantity" id="appendedInputButtons" data-id="@cart.Product.Id" size="16" type="text">
+
+                                        <button class="btn btn-outline-success plus" type="button" id="plus" style="font-size:12pt;"><i class="fa fa-plus"></i></button>
+                                        <a class="btn btn-danger" asp-controller="cart" asp-action="remove" asp-route-id="@cart.Product.Id"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                                <td><span class="price">@cart.Price.ToString("#,##")</span><span> ریال </span> </td>
+                                <td><span class="discount">@(string.IsNullOrWhiteSpace(cart.BasePrice.ToString()) ? "0" : cart.BasePrice.ToString("#,##"))</span><span> ریال </span></td>
+                                <td> <span class="totalPriceOfRow">@((cart.Price * cart.Quantity).ToString("#,##")) </span><span> ریال </span> </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="5" style="text-align:right">جمع :	</td>
+                            <td> <span id="totalPriceWithoutDiscount">@sum.ToString("#,##")</span> <span>ریال</span> </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5" style="text-align:right">جمع تخفیف:	</td>
+                            <td class="text-danger"> @(discountSum == 0 ? 0.ToString() : discountSum.ToString("#,##")) <span>ریال</span></td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="5" style="text-align:right"><strong> جمع کل: </strong></td>
+                            <td class="label label-important" style="display:block"> <strong id="totalPriceTable"> @sum.ToString("#,##")  </strong><span>ریال</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-lg-12" style="float:right;text-align: justify;padding: 10px 15px;">
+                        <form class="form">
+                            <div class="control-group">
+                                <label class="control-label"><strong> کد تخفیف: </strong> </label>
+                                <div class="controls" style="display:flex">
+                                    <input type="text" class="form-control input-medium" style="width:20%" placeholder="کد">
+                                    <button type="submit" class="btn  mr-2" style="background-color:#7fad39"> اعمال کردن </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12" style="padding:10px 50px">
+                        <a asp-controller="home" class="btn btn-large btn-info" style=""><i class="icon-arrow-left"></i> ادامه خرید </a>
+                        <a asp-controller="cart" asp-action="shipping" class="btn btn-large btn-info pull-right" style="background-color: #7fad39 !important;color:#fff">نهایی کردن خرید <i class="icon-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                
             </div>
-
-
         </div>
+    </div>
+}
+    @*<div style="background-color:white">
 
-        <hr />
-        <div class="row">
-            <div class="col-lg-12" style="padding:10px 50px">
-                <a asp-controller="home" class="btn btn-large btn-info"><i class="icon-arrow-left"></i> ادامه خرید </a>
-                <a asp-controller="cart" asp-action="shipping" class="btn btn-large btn-info pull-right">نهایی کردن خرید <i class="icon-arrow-right"></i></a>
-            </div>
+            @if (ViewBag.Cart == null)
+            {
+                <h3>سبد شما خالی است</h3>
+            }
+        </div>*@
 
-        </div>
-
-    }
-</div>
-
-
-<script src="~/user/themes/js/jquery.js"></script>
-<script>
+    <script src="~/user/themes/js/jquery.js"></script>
+    <script>
     //$("#plus").click(function () {
     //    var quantity = $("#appendedInputButtons").val();
     //    quantity= parseInt(quantity)+1;
@@ -141,7 +149,27 @@
         target.value = +target.value + 1;
         var productId = $('.quantity', this.parentNode)[0];
         var pid = $(productId).attr("data-id");
-        console.log(pid);
+
+        var row = jQuery(this).closest('tr');
+        var targetOfPrice = row.find('.price').html();
+        targetOfPrice = targetOfPrice.replace(',', '');
+        targetOfPrice = parseInt(targetOfPrice);
+        let sumOfRow = targetOfPrice * target.value;
+
+        let targetOfDiscount = row.find('.discount').html();
+
+        if (targetOfDiscount != '') {
+            targetOfDiscount = parseInt(targetOfDiscount);
+
+            let sumDiscount = targetOfDiscount * target.value;
+            row.find('.discount').html(numberWithComma(sumDiscount));
+
+            sumOfRow = sumOfRow - sumDiscount;
+        }
+
+        row.find('.totalPriceOfRow').html(numberWithCommas(sumOfRow));
+
+        //var targetoftotalPrice = $('.totalPriceOfRow', this.parentNode);
 
         $.ajax({
             url: "@Url.Action("buyJson", "cart")",
@@ -151,21 +179,50 @@
                 quantity: target.value
             },
             success: function (response) {
-                if (response == true) {
-                    location.reload();
-                }
+                $("#totalPriceTable").html(response.sum);
+                $("#totalPrice").html(response.sum);
+                $("#totalPriceWithoutDiscount").html(response.sum);
+                $("#countOfPrice").html(response.count);
+
+                localStorage.setItem("countofPrice", response.count);
+                localStorage.setItem("totalPrice", response.sum);
+
             }
 
         });
     });
 
+        $(".minus").click(function () {
 
-    $(".minus").click(function () {
         var target = $('.quantity', this.parentNode)[0];
-        target.value = +target.value - 1;
+
+            target.value = target.value - 1;
+            console.log(target.value);
+            if (target.value < 1) {
+
+                var row = jQuery(this).closest('tr');
+                row.find('.quantity').val(1)
+                return;
+            }
         var productId = $('.quantity', this.parentNode)[0];
         var pid = $(productId).attr("data-id");
-        console.log(pid);
+
+        var row = jQuery(this).closest('tr');
+        var targetOfPrice = row.find('.price').html();
+        targetOfPrice = targetOfPrice.replace(',', '');
+        targetOfPrice = parseInt(targetOfPrice);
+        let sumOfRow = targetOfPrice * target.value;
+
+        let targetOfDiscount = row.find('.discount').html();
+
+        if (targetOfDiscount != '') {
+            targetOfDiscount = parseInt(targetOfDiscount);
+
+            let sumDiscount = targetOfDiscount * target.value;
+            row.find('.discount').html(numberWithComma(sumDiscount));
+
+            sumOfRow = sumOfRow - sumDiscount;
+        }
 
         $.ajax({
             url: "@Url.Action("buyJson", "cart")",
@@ -175,12 +232,21 @@
                 quantity: target.value
             },
             success: function (response) {
-                if (response == true) {
-                    location.reload();
-                }
+                //location.reload();
+                $("#totalPriceTable").html(response.sum);
+                $("#totalPrice").html(response.sum);
+                $("#totalPriceWithoutDiscount").html(response.sum);
+                $("#countOfPrice").html(response.count);
+                row.find('.totalPriceOfRow').html(numberWithCommas(sumOfRow));
+
+                localStorage.setItem("countofPrice", response.count);
+                localStorage.setItem("totalPrice", response.sum);
             }
 
         });
     });
 
-</script>
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    }
+    </script>

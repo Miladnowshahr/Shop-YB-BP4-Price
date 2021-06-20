@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShopYB.Models;
+using ShopYB.Models.ViewModels;
 using SmartBreadcrumbs.Attributes;
 
 namespace Shop_YB.Controllers
@@ -75,7 +78,26 @@ namespace Shop_YB.Controllers
 
             //.OrderByDescending(o => o.Count).Select(s => s.).ToList();
             ViewBag.MaxSales = product;
-           // ViewBag.MaxSales =db.InvoiceDetails.Count()==0?new List<Product>(): db.InvoiceDetails.GroupBy(x => x.Product).Select(x => new { productId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).Select(x => x.productId).ToList();
+            // ViewBag.MaxSales =db.InvoiceDetails.Count()==0?new List<Product>(): db.InvoiceDetails.GroupBy(x => x.Product).Select(x => new { productId = x.Key, count = x.Count() }).OrderByDescending(x => x.count).Select(x => x.productId).ToList();
+
+             var categories= db.Category.Where(w => w.ParentId == null).ToList();
+            ViewBag.Categories = categories;
+
+
+
+
+            var productCategory = db.Category.Include(i => i.Products).Where(w=>w.Products.Count>=1)
+                .Select(s => new CategoryVM 
+                {
+                    Name = s.Parent.Name,
+                    Id = s.Id,
+                    Photo = s.Products.Select(w => w.Photos.FirstOrDefault(f => f.Status && f.Featured).Name).FirstOrDefault()
+                }).ToList();
+
+            var group = productCategory.GroupBy(g => g.Name).Select(s=>new CategoryVM { Name=s.Key,Photo= s.FirstOrDefault().Photo,Id=s.FirstOrDefault().Id }).ToList();
+
+            ViewBag.ProductCategory = group;
+            //ViewBag.SlideShow = db.SlideShow.Where(w => w.Status).ToList();
 
             ViewBag.Basket = TempData["Basket"];
             return View();

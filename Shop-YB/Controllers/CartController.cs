@@ -25,13 +25,11 @@ namespace Shop_YB.Controllers
             db = _db;
         }
 
-
         [Route("index")]
         [Breadcrumb("سبد خرید", FromAction = "Index", FromController = typeof(HomeController))]
         public IActionResult Index()
         {
             List<Item> cart = SessionHelper.GetObjectFromJson(HttpContext.Session, "cart");
-
 
             if (SessionHelper.GetObjectFromJson(HttpContext.Session, "cart") == null)
             {
@@ -62,79 +60,12 @@ namespace Shop_YB.Controllers
                 return cart.Count;
         }
 
-
         [HttpGet]
         [Route("buy/{id}")]
         public IActionResult buy(int id, int? quantity)
         {
-
             int quant = quantity ?? 1;
             var product = db.Products.Find(id);
-            var price = db.ProductPrices.FirstOrDefault(x => x.IsActive && x.ProductId == id).BasePrice;
-            double discountValue = 0;
-            var basePrice = 0;
-            if (db.PDiscounts.Any(x => x.IsActive && x.ProductId == id))
-            {
-                discountValue = db.PDiscounts.FirstOrDefault(x => x.ProductId == id && x.IsActive).DiscountValue;
-                basePrice = (int)((100 * price) / (100 - discountValue))-price;
-            } 
-            
-            List<Item> lstC = new List<Item>();
-            if (SessionHelper.GetObjectFromJson(HttpContext.Session, "cart") == null)
-            {
-                List<Item> cart = new List<Item>();
-                cart.Add(new Item
-                {
-                    Product = product,
-                    Quantity = quant,
-                    PhotoName = db.Photos.SingleOrDefault(x => x.ProductId == product.Id && x.Featured).Name,
-                    Price=price,
-                    Discount=discountValue,
-                    BasePrice=basePrice
-                    
-                });
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                lstC = cart;
-            }
-            else
-            {
-                List<Item> cart = SessionHelper.GetObjectFromJson(HttpContext.Session, "cart");
-                int index = exists(id, cart);
-                if (index == -1)
-                {
-                    cart.Add(new Item
-                    {
-                        Product = product,
-                        Quantity = quant,
-                        PhotoName = db.Photos.SingleOrDefault(x => x.ProductId == product.Id && x.Featured).Name,
-                        Price = price,
-                        Discount = discountValue,
-                        BasePrice = basePrice
-                    });
-                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-                }
-                else
-                {
-                    int newQuantity = cart[index].Quantity + quant;
-                    cart[index].Quantity = newQuantity;
-                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-
-                }
-                lstC = cart;
-
-            }
-            TempData["Basket"] = lstC.Count();
-            return RedirectToAction("index", "cart");
-        }
-
-
-        [Route("buyJson")]
-        [HttpPost]
-        public JsonResult buyJson(int id, int? quantity)
-        {
-            int quant = quantity ?? 1;
-            var product = db.Products.Find(id);
-
             var price = db.ProductPrices.FirstOrDefault(x => x.IsActive && x.ProductId == id).BasePrice;
             double discountValue = 0;
             var basePrice = 0;
@@ -179,18 +110,80 @@ namespace Shop_YB.Controllers
                 }
                 else
                 {
-                    int newQuantity = quant;
+                    int newQuantity = cart[index].Quantity + quant;
                     cart[index].Quantity = newQuantity;
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-
                 }
                 lstC = cart;
-
             }
-            TempData["Basket"] = lstC.Count;
-            return Json(true);
+            TempData["Basket"] = lstC.Count();
+            return RedirectToAction("index", "cart");
         }
 
+        [Route("buyJson")]
+        [HttpPost]
+        public JsonResult buyJson(int id, int? quantity)
+        {
+            var product = db.Products.Find(id);
+
+            var price = db.ProductPrices.FirstOrDefault(x => x.IsActive && x.ProductId == id).BasePrice;
+            double discountValue = 0;
+            var basePrice = 0;
+            if (db.PDiscounts.Any(x => x.IsActive && x.ProductId == id))
+            {
+                discountValue = db.PDiscounts.FirstOrDefault(x => x.ProductId == id && x.IsActive).DiscountValue;
+                basePrice = (int)((100 * price) / (100 - discountValue)) - price;
+            }
+
+            List<Item> lstC = new List<Item>();
+            if (SessionHelper.GetObjectFromJson(HttpContext.Session, "cart") == null)
+            {
+                int quant = quantity ?? 1;
+
+                List<Item> cart = new List<Item>();
+                cart.Add(new Item
+                {
+                    Product = product,
+                    Quantity = quant,
+                    PhotoName = db.Photos.SingleOrDefault(x => x.ProductId == product.Id && x.Featured).Name,
+                    Price = price,
+                    Discount = discountValue,
+                    BasePrice = basePrice
+                });
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                lstC = cart;
+            }
+            else
+            {
+                List<Item> cart = SessionHelper.GetObjectFromJson(HttpContext.Session, "cart");
+                int index = exists(id, cart);
+                if (index == -1)
+                {
+                    int quant = quantity ?? 1;
+                    cart.Add(new Item
+                    {
+                        Product = product,
+                        Quantity = quant,
+                        PhotoName = db.Photos.SingleOrDefault(x => x.ProductId == product.Id && x.Featured).Name,
+                        Price = price,
+                        Discount = discountValue,
+                        BasePrice = basePrice
+                    });
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                }
+                else
+                {
+                    cart[index].Quantity = quantity.HasValue ? quantity.Value : ++cart[index].Quantity;
+
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                }
+                lstC = cart;
+            }
+            TempData["Basket"] = lstC.Count;
+            var sum = lstC.Sum(s => s.Price * s.Quantity).ToString("#,##");
+            object newObject = new { count = lstC.Count, sum = sum };
+            return Json(newObject);
+        }
 
         //2
         [Authorize(Roles = "customer", AuthenticationSchemes = "User_Schema")]
@@ -210,7 +203,6 @@ namespace Shop_YB.Controllers
             ViewBag.Ship = 1;
             if (cart != null)
             {
-
                 var totalPrice = cart.Sum(x => x.Quantity * x.Price);
                 ViewBag.TotalPrice = totalPrice;
 
@@ -232,14 +224,11 @@ namespace Shop_YB.Controllers
         [HttpPost]
         public IActionResult Payment(CheckoutViewModel model)
         {
-
             return View(model);
-
         }
 
         public IActionResult Pay(CheckoutViewModel model)
         {
-
             return RedirectToAction("Checkout");
         }
 
@@ -247,12 +236,10 @@ namespace Shop_YB.Controllers
         [Route("checkout")]
         public IActionResult Checkout(CheckoutViewModel model)
         {
-
-
-            if (model.ShipMethod==3 && model.Pay==2)
+            if (model.ShipMethod == 3 && model.Pay == 2)
             {
                 ModelState.AddModelError("", "این روش امکان پذیر نمی باشد.");
-                return View("Payment",model);
+                return View("Payment", model);
             }
             var user = User.FindFirst(ClaimTypes.Name);
 
@@ -262,7 +249,6 @@ namespace Shop_YB.Controllers
             }
             else
             {
-
                 var customer = db.Account.SingleOrDefault(a => a.Username.Equals(user.Value));
 
                 using (var dbTrans = db.Database.BeginTransaction())
@@ -280,7 +266,7 @@ namespace Shop_YB.Controllers
                         db.Invoices.Add(invoice);
                         db.SaveChanges();
 
-                        //Ship 
+                        //Ship
                         var ship = new Ship();
 
                         ship.AddressId = model.Id;
@@ -298,7 +284,6 @@ namespace Shop_YB.Controllers
                         }
                         ship.ShipMethod = model.ShipMethod;
                         db.Ships.Add(ship);
-
 
                         //Create invoice Details
                         var invoiceDetials = new List<InvoiceDetails>();
@@ -332,7 +317,6 @@ namespace Shop_YB.Controllers
 
                         var phone = db.Addresses.Find(model.Id).Phone;
 
-
                         dbTrans.Commit();
 
                         if (model.Pay == 1)
@@ -340,7 +324,7 @@ namespace Shop_YB.Controllers
                             ModelState.AddModelError("", "امکان ارتباط با سرور بانک مقدور نمی باشد..");
                             return View("Payment", model);
                         }
-                        return RedirectToAction("Thanks", "cart",new { id = invoice.Id });
+                        return RedirectToAction("Thanks", "cart", new { id = invoice.Id });
                     }
                     catch (Exception ex)
                     {
@@ -348,12 +332,6 @@ namespace Shop_YB.Controllers
                     }
                 }
                 return View();
-
-
-
-
-
-
 
                 //zarinpal
 
@@ -367,11 +345,6 @@ namespace Shop_YB.Controllers
                 //else
                 //    return BadRequest();
 
-
-
-
-
-
                 //twilio
                 //  var sid = "AC740b46957eebd103c79ac49f2b90c6f4";
                 //var token = "702995b5adbed075d749ef84839d6638";
@@ -384,28 +357,19 @@ namespace Shop_YB.Controllers
                 //    to: new Twilio.Types.PhoneNumber("+98"+phone)
                 //);
                 //var res = _message.Sid;
-
-
-
-
             }
         }
-
-
-
 
         //5
         [Route("thanks")]
         public IActionResult Thanks(int id)
         {
-
             //pasrs green
             //var mobile = "09116319715";
             //var text = "123";
             //string _signature = "D062B0E5-9BFC-455A-A2E2-ED3366FA2D22";
             //var message = new Message(_signature);
             //var result = message.SendOtp( mobile, text,0,true);
-
 
             //ViewBag.Result = result;
             //remove items in cart
@@ -420,14 +384,13 @@ namespace Shop_YB.Controllers
             int index = exists(id, cart);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            ViewBag.Cart = null;
             return RedirectToAction("index", "cart");
-
         }
-
 
         public IActionResult CheckPay(int id)
         {
-            if ((HttpContext.Request.Query["status"] !="") && (HttpContext.Request.Query["status"].ToString().ToLower()=="ok") && (HttpContext.Request.Query["Authority"]!=""))
+            if ((HttpContext.Request.Query["status"] != "") && (HttpContext.Request.Query["status"].ToString().ToLower() == "ok") && (HttpContext.Request.Query["Authority"] != ""))
             {
                 string authority = HttpContext.Request.Query["Authority"].ToString();
                 var order = db.Invoices.FirstOrDefault(x => x.Id == id);
@@ -435,9 +398,8 @@ namespace Shop_YB.Controllers
                 var payment = new ZarinpalSandbox.Payment(order.Payments.Amount);
                 var res = payment.Verification(authority).Result;
 
-                if (res.Status==100)
+                if (res.Status == 100)
                 {
-
                     order.Status = 1;
                     order.Payments.Status = true;
                     db.Entry(order).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -451,12 +413,7 @@ namespace Shop_YB.Controllers
             }
             ViewBag.ErrorCode = "متاسفانه جوابی از درگاه بانکی دریافت نشده است";
             return View("ErrorOnlinePay");
-
         }
-
-
-
-
 
         private int exists(int id, List<Item> cart)
         {
@@ -468,7 +425,6 @@ namespace Shop_YB.Controllers
                 }
             }
             return -1;
-
         }
     }
 }

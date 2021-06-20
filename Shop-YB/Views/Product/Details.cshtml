@@ -3,20 +3,63 @@
 
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     var featuredImage = Model.Product.Photos.SingleOrDefault(x => x.Featured == true && x.Status).Name;
-    var images = Model.Product.Photos.Where(x => x.Status);
+    var images = Model.Product.Photos.Where(x => x.Status).ToList();
     int commentCount = 0;
 
 }
 
-    <div style="background-color:white">
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
         <div class="row">
-            <div id="gallery" class="col-lg-4" style="padding-right:30px;margin-top:30px">
+            <div class="col-lg-6 col-md-6" style="text-align:center">
+                <div class="product__details__text">
+                    <h3>@Model.Product.Name</h3>
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(@Model.Comments.Count() نظر)</span>
+                    </div>
+                    <div class="product__details__price" style="font-family:'B Yekan';display:inline-flex;align-items:center;align-content:center"><span style="font-size:x-small">ريال</span>@Model.Product.Price.ToString("#,##")</div>
+                    <p>
+                        @Model.Product.Description
+                    </p>
+                    <form asp-controller="cart" asp-action="buy" asp-route-id="@Model.Product.Id" method="get">
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <a href="#" class="heart-icon" onclick="saveWishList(@Model.Product.Id)" style="background-color:#c01f1f;color:#fff;border-radius:0.25em;"><span class="icon_heart_alt"></span></a>
+                                <div class="pro-qty">
+                                    <input type="text" name="quantity" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn" style="background-color:#7fad39;color:#fff;height:50px"> اضافه کردن به سبد <i class="fa fa-shopping-cart"></i></button>
+                    </form>
+                    <ul>
+                        <li><span>موجود</span><b style="float:right">وضعیت</b> </li>
+                        <li><span> از 1 روز کاری </span><span><b style="float:right">زمان ارسال</b> </span></li>
+                        <li><span>0.5 kg</span><b style="float:right">وزن</b> </li>
+                        <li>
+                            <b style="float:right">اشتراک</b>
+                            <div class="share">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="gallery" class="col-lg-6" style="padding-right:30px;margin-top:30px">
                 <a href="~/products/@featuredImage" data-lightbox="example-set" title="@Model.Product.Name">
                     <img src="~/products/@featuredImage" class="example-image" style="width:100%" alt="@Model.Product.Name">
                 </a>
-                <div id="differentview" class="moreOptopm carousel slide" style="padding-top: 20px;">
+                <div id="differentview" class="moreOptopm carousel slide" style="padding-top: 20px;text-align:right">
                     <div class="carousel-inner">
-
 
                         <div class="item active">
                             @foreach (var image in images)
@@ -26,11 +69,8 @@
                                 </a>
 
                             }
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <div class="btn-toolbar">
@@ -44,266 +84,412 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
 
-                <h3 style="padding-top:30px;text-align:center">@Model.Product.Name</h3>
-                <hr class="soft">
-
-                <p style="text-align:justify;    margin: 50px;">
-                    @Model.Product.Description
-                </p>
-
-
-                <hr class="soft clr">
-
-                <form class="form-horizontal qtyFrm" asp-controller="cart" asp-action="buy" asp-route-id="@Model.Product.Id" method="get">
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <span class="btn btn-large btn-danger">
-                                @Model.ProductPrice.BasePrice.ToString("#,##") <span>ریال</span>
-                            </span>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                               aria-selected="false">نظر کاربران <span>(1)</span></a>
+                        </li>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                               aria-selected="false">مشخصات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                               aria-selected="true">توضیحات</a>
+                    </ul>
+                    <div class="tab-content" dir="rtl">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Description</h6>
+                                <p>
+                                    @Html.Raw(Model.Product.Details)
+                                </p>
+                                <p>
+                                </p>
+                            </div>
                         </div>
-
-                        <div class="col-lg-4">
-                            <input type="number" min="1" value="1" class="col-lg-6 form-control" name="quantity">
-
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc" style="direction:rtl;display:block;text-align:start">
+                                <h6>مشخصات محصول</h6>
+                                <div>
+                                    <dl class="row">
+                                        <dt>وزن</dt>
+                                        <dd>500</dd>
+                                    </dl>
+                                    <dl class="row">
+                                        <dt>کیفیت</dt>
+                                        <dd>عالی</dd>
+                                    </dl>
+                                    <dl class="row">
+                                        <dt>روش استفاده</dt>
+                                        <dd>چای را با آب جوشانده</dd>
+                                    </dl>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-4">
-                            <button type="submit" class="btn btn-large btn-primary pull-right"> افزودن به سبد <i class=" icon-shopping-cart"></i></button>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc" style="direction:rtl;display:block;text-align:start;font-family:'B Yekan'">
 
+
+                                @*Show Comment*@
+                                <div class="box" style="padding-bottom:20px;">
+
+                                    <div class="row">
+                                        <div class="box-header" style="display:flex;justify-content:center;padding-top:10px">
+                                            <h6>نظرات کاربران</h6>
+                                        </div>
+                                    </div>
+                                    <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
+                                        <div class="showComment">
+                                            @{
+                                                var comment = (IEnumerable<ShopYB.Models.Comment>)ViewBag.Comment;
+                                                commentCount = comment.Count();
+
+                                                foreach (var item in comment)
+                                                {
+                                                    var countDislike = item.LikeDislikes.Count(x => x.Status == false);
+                                                    var countLike = item.LikeDislikes.Count(x => x.Status == true);
+                                                    var year = item.Date_Time.Year;
+                                                    var month = item.Date_Time.Month;
+                                                    var day = item.Date_Time.Day;
+                                                    <div class="parentComment" style="background-color:#f3f6fa;padding:1em;margin-bottom:1em">
+                                                        <div class="parentCommentHeader">
+                                                            <img class="imgUser_Comment" src="~/user/themes/images/userComent.jpg" />
+                                                            <span class="username_Comment">@item.FullName</span>
+                                                            <span class="dateComment" style="float:left;direction:ltr">
+                                                                <span>@year</span>/<span>@month</span>/<span>@day</span> | @item.Date_Time.ToShortTimeString()
+                                                            </span>
+                                                        </div>
+                                                        <div class="bodyComment" style="margin: 0.5em 1em;">
+                                                            <p>@item.Content</p>
+                                                        </div>
+                                                        <div class="footerComment">
+                                                            <div class="likeDislike" style="text-align:end;">
+                                                                <span class="dislike btn btn-danger" onclick="likeComment(@item.Id,false,this);" id="dislike">
+                                                                    <span id="countdislike" class="count">@countDislike</span>
+                                                                    <span class="fa fa-thumbs-down"></span>
+                                                                </span>
+                                                                <span class="like btn btn-success" onclick="likeComment(@item.Id,true,this);" id="like">
+                                                                    <span id="countlike" class="count">@countLike</span>
+                                                                    <span class="fa fa-thumbs-up"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (commentCount > 5)
+                                    {
+                                        <div class="showmore">
+                                            <a href="#" id="moreComment" count="1" class="moreComment">Show More </a>
+                                        </div>
+                                    }
+                                </div>
+
+                                <!-- Send Comment-->
+                                <div class="box" style="padding-bottom:20px; background-color:#f3f6fa;margin-left:40px;margin-right:30px">
+                                    <div class="row" style="display:flex;justify-content:center;padding-top:10px">
+                                        <div class="box-header">
+                                            <h6>ارسال نظر</h6>
+                                        </div>
+                                    </div>
+                                    <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
+                                        <form id="frmComment">
+                                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                                            <div class="row" style="margin:0px">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="name"><span class="fa fa-user-plus"></span> نام و نام‌خانوادگی</label>
+                                                        <input type="text" class="form-control" name="fullname" required="required" placeholder="نام ...">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="email"><span class="fa fa-envelope"></span> ایمیل</label>
+                                                        <input type="email" class="form-control" id="email" required="required" name="email" placeholder="ایمیل">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row-fluid">
+                                                <div class="col-lg-12">
+
+                                                    <label for="content"><span class="fa fa-comment"></span> نظر</label>
+                                                    <textarea rows="5" style="width:100%" class="form-control" id="content" required="required" name="content" placeholder="نظر خود را وارد نمایید"></textarea>
+                                                </div>
+                                            </div>
+                                            <div style="direction:ltr;margin:1em">
+                                                <button type="submit" id="sendComment" class="btn" style="background-color:#7fad39;color:#fff"><span class="fa fa-save"></span> ارسال نظر</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="row">
+                                    <div class="col-10">
+                                        <div class="" style="background-color:#f3f6fa;border-radius:0.25em;padding-right:20px;padding:1em;">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <span><i class="fa fa-user-circle" style="font-size:xx-large;margin-left:.25em;vertical-align:middle"></i><span>میلاد نعمت پور</span></span>
+                                                </div>
+                                                <div class="col-6" style="text-align:center" >
+                                                    تاریخ: دو ماه پیش
+                                                </div>
+                                            </div>
+                                            <p style="padding:2em">چای عالی بود  و طعم بسیار خوبی می داد.</p>
+                                        </div>
+                                    </div>
+                                </div>*@
                         </div>
                     </div>
-
-
-
-                </form>
-
-                <div  style="padding-top:20px;text-align:center">
-                    <img src="~/Logo/0ydc_return_5_days_real(1).jpg" height="70" />
-                   
-                    <img src="~/Logo/42cc558b774a5e08a63b0d20492e4df7.png" height="70" />
-                </div>
-
-            </div>
-
-
-        </div>
-
-        
-        <hr />
-
-
-        <!-- Product Details-->
-        <div class="box">
-
-
-            <div class="row">
-                <div class="box-header">
-                    <h2>اطلاعات محصول</h2>
                 </div>
             </div>
-            <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
-                <p style="text-align:justify;font-size:13pt; line-height: 30px;">
-                    @Html.Raw(Model.Product.Details)
-
-                </p>
-            </div>
         </div>
-
-
-        <!-- Product related-->
-
-        <div class="box" style="padding-bottom:20px;">
-            <div class="row" style="padding-top:50px">
-                <div class="box-header">
+    </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+<!-- Related Product Section Begin -->
+<section class="related-product" dir="rtl">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title related__product__title">
                     <h2>محصولات مشابه</h2>
                 </div>
             </div>
-            <div class="box-body">
-                <div class="container-fluid" dir="ltr">
-                    <div id="smilarProduct" class="owl-carousel owl-theme card-deck">
-                        @{
-
-                            var products = Model.RelatedProduct;
-                            foreach (var product in products)
-                            {
-                                var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
-                                <div class="card text-center car" style="height:320px;">
-
-                                    <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
-
-                                    <div class="card-body">
-                                        <h5 class="card-title small" style="height:40px">@product.Name</h5>
-                                        <p class="card-text " style="color:#c13260;" dir="rtl">
-                                            @product.ProductPrices.FirstOrDefault(x => x.IsActive == true && x.ProductId == product.Id).BasePrice.ToString("#,##")<span>  ریال </span>
-                                        </p>
-                                    </div>
-                                    <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-danger">
-                                        افزودن به سبد   <i class="fa fa-shopping-cart"></i>
-                                    </a>
-                                </div>
-
-                            }
-
-                        }
-
-                    </div>
-                </div>
-
-            </div>
-
         </div>
-
-
-        <!-- Send Comment-->
-        <div class="box" style="padding-bottom:20px;">
-
-
-            <div class="row">
-                <div class="box-header">
-                    <h2>ارسال نظر</h2>
-                </div>
-            </div>
-            <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
-                <form id="frmComment">
-                    <input type="hidden" name="productId" value="@Model.Product.Id" />
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label class="col-md-4" for="name"><span class="fa fa-user-plus"></span> نام و نام‌خانوادگی</label>
-                                <input type="text" class="form-control" name="fullname" required="required" placeholder="نام ...">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="email"><span class="fa fa-envelope"></span> ایمیل</label>
-                                <input type="email" class="form-control" id="email" required="required" name="email" placeholder="ایمیل">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row-fluid">
-                        <div class="col-lg-12">
-
-                            <label for="content"><span class="fa fa-comment"></span> نظر</label>
-                            <textarea rows="8" style="width:100%" class="form-control" id="content" required="required" name="content" placeholder="نظر خود را وارد نمایید"></textarea>
-
-                        </div>
-
-
-                    </div>
-
-                    <br />
-                    <button type="submit" id="sendComment" class="btn btn-info btn-large pull-left"><span class="fa fa-save"></span> ارسال نظر</button>
-
-                </form>
-            </div>
-        </div>
-
-
-        <!-- Show Comment-->
-        <div class="box" style="padding-bottom:20px;">
-
-            <div class="row">
-                <div class="box-header">
-                    <h2>نظرات کاربران</h2>
-                </div>
-            </div>
-            <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
-                <div class="showComment">
-                    @{
-                        var comment = (IEnumerable<ShopYB.Models.Comment>)ViewBag.Comment;
-                        commentCount = comment.Count();
-
-                        foreach (var item in comment)
-                        {
-                            var countDislike = item.LikeDislikes.Count(x => x.Status == false);
-                            var countLike = item.LikeDislikes.Count(x => x.Status == true);
-
-                            <div class="parentComment">
-                                <div class="parentCommentHeader">
-                                    <img class="imgUser_Comment" src="~/user/themes/images/userComent.jpg" />
-                                    <span class="username_Comment">@item.FullName</span>
-                                    <span class="dateComment">@item.Date_Time</span>
-                                </div>
-                                <div class="bodyComment">
-                                    <p>@item.Content</p>
-
-                                </div>
-                                <div class="footerComment">
-                                    <div class="likeDislike">
-                                        <span class="dislike btn btn-danger" onclick="likeComment(@item.Id,false,this);" id="dislike">
-                                            <span id="countdislike" class="count">@countDislike</span>
-                                            <span class="fa fa-thumbs-down"></span>
-                                        </span>
-                                        <span class="like btn btn-success" onclick="likeComment(@item.Id,true,this);" id="like">
-                                            <span id="countlike" class="count">@countLike</span>
-                                            <span class="fa fa-thumbs-up"></span>
-                                        </span>
-
-                                    </div>
-                                </div>
-
-
-
-
-
-
-
-                            </div>
-
-                        }
-                    }
-
-
-                </div>
-            </div>
-            @if (commentCount > 5)
+        <div class="row">
+            @foreach (var item in Model.RelatedProduct)
             {
-                <div class="showmore">
-                    <a href="#" id="moreComment" count="1" class="moreComment">Show More </a>
-
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="/products/@item.Photos.FirstOrDefault(f=>f.Featured).Name">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">@item.Name</a></h6>
+                            <h5><span>@item.Price.ToString("#,##")</span><span style="font-size:xx-small">ريال</span></h5>
+                        </div>
+                    </div>
                 </div>
             }
+
+            @*<div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="img/product/product-7.jpg">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>*@
         </div>
+    </div>
+</section>
+<!-- Related Product Section End -->
+<!--<div style="background-color:white">
+    <div class="row">
+        <div id="gallery" class="col-lg-4" style="padding-right:30px;margin-top:30px">
+            <a href="~/products/@featuredImage" data-lightbox="example-set" title="@Model.Product.Name">
+                <img src="~/products/@featuredImage" class="example-image" style="width:100%" alt="@Model.Product.Name">
+            </a>
+            <div id="differentview" class="moreOptopm carousel slide" style="padding-top: 20px;">
+                <div class="carousel-inner">
 
+                    <div class="item active">
+                        @foreach (var image in images)
+                        {
+                            <a href="~/products/@image.Name">
+                                <img style="width:29%" src="~/products/@image.Name" alt="">
+                            </a>
 
+                        }
+                    </div>
+                </div>
+            </div>
 
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <span class="btn"><i class="icon-envelope"></i></span>
+                    <span class="btn"><i class="icon-print"></i></span>
+                    <span class="btn"><i class="icon-zoom-in"></i></span>
+                    <span class="btn"><i class="icon-star"></i></span>
+                    <span class="btn"><i class=" icon-thumbs-up"></i></span>
+                    <span class="btn"><i class="icon-thumbs-down"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
 
+            <h3 style="padding-top:30px;text-align:center">@Model.Product.Name</h3>
+            <hr class="soft">
+
+            <p style="text-align:justify;    margin: 50px;">
+                @Model.Product.Description
+            </p>
+
+            <hr class="soft clr">
+
+            <form class="form-horizontal qtyFrm" asp-controller="cart" asp-action="buy" asp-route-id="@Model.Product.Id" method="get">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <span class="btn btn-large btn-danger">
+                            @Model.ProductPrice.BasePrice.ToString("#,##") <span>ریال</span>
+                        </span>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <input type="number" min="1" value="1" class="col-lg-6 form-control" name="quantity">
+                    </div>
+                    <div class="col-lg-4">
+                        <button type="submit" class="btn btn-large btn-primary pull-right"> افزودن به سبد <i class=" icon-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </form>
+
+            <div  style="padding-top:20px;text-align:center">
+                <img src="~/Logo/0ydc_return_5_days_real(1).jpg" height="70" />
+
+                <img src="~/Logo/42cc558b774a5e08a63b0d20492e4df7.png" height="70" />
+            </div>
+        </div>
     </div>
 
-<link href="~/user/themes/LightBox/css/lightbox.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="~/user/themes/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
-<script src="~/user/themes/LightBox/js/lightbox.js"></script>
+    <hr />-->
+<!-- Product Details-->
+<!--<div class="box">
+
+    <div class="row">
+        <div class="box-header">
+            <h2>اطلاعات محصول</h2>
+        </div>
+    </div>
+    <div class="box-body" style="margin-right:auto;margin-left:15px;padding: 0 30px; ">
+        <p style="text-align:justify;font-size:13pt; line-height: 30px;">
+            @Html.Raw(Model.Product.Details)
+        </p>
+    </div>
+</div>-->
+<!-- Product related-->
+<!--<div class="box" style="padding-bottom:20px;">
+    <div class="row" style="padding-top:50px">
+        <div class="box-header">
+            <h2>محصولات مشابه</h2>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="container-fluid" dir="ltr">
+            <div id="smilarProduct" class="owl-carousel owl-theme card-deck">
+                @{
+
+                    var products = Model.RelatedProduct;
+                    foreach (var product in products)
+                    {
+                        var image = product.Photos.SingleOrDefault(x => x.Featured).Name;
+                        <div class="card text-center car" style="height:320px;">
+
+                            <img src="~/products/@image" class="card-img-top" height="150px" width="auto" alt="...">
+
+                            <div class="card-body">
+                                <h5 class="card-title small" style="height:40px">@product.Name</h5>
+                                <p class="card-text " style="color:#c13260;" dir="rtl">
+                                    @product.ProductPrices.FirstOrDefault(x => x.IsActive == true && x.ProductId == product.Id).BasePrice.ToString("#,##")<span>  ریال </span>
+                                </p>
+                            </div>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-outline-danger">
+                                افزودن به سبد   <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
 <script>
 
-     $('#smilarProduct').owlCarousel({
-        loop: false,
-        margin: 1,
-        nav: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 5
-            }
-        }
-    });
+    function saveWishList(number) {
+        localStorage.setItem("whishlist", number);
+    }
 
-
+    //$('#smilarProduct').owlCarousel({
+    //    loop: false,
+    //    margin: 1,
+    //    nav: true,
+    //    responsive: {
+    //        0: {
+    //            items: 1
+    //        },
+    //        600: {
+    //            items: 3
+    //        },
+    //        1000: {
+    //            items: 5
+    //        }
+    //    }
+    //});
 
     $("#frmComment").submit(function (e) {
-
+        console.log("hi");
         e.preventDefault();
         var form = $(this);
-
 
          $.ajax({
 
@@ -324,19 +510,9 @@
 
     });
 
-
-    
-
-
-
-
-
     function likeComment(cId, st, el) {
 
-
         var count = parseInt(el.innerText);
-
-
 
         //var count = parseInt(el.innerHTML);
             var likeOrDislike = 'dislike';
@@ -358,16 +534,13 @@
                         console.log(el.children[0]);
                         el.children[0].innerText = count + 1;
 
-
                         var minus = el.parentNode.children[likeOrDislike].children['count' + likeOrDislike].innerText;
-
 
                         if (minus > 0) {
 
                               el.parentNode.children[likeOrDislike].children['count'+likeOrDislike].innerText = minus - 1;
                             return 0;
                         }
-
 
                         //console.log($minuselment);
 
@@ -376,8 +549,6 @@
                         //console.log($minuselment);
 
                         //el.innerText = parseInt(count + 1);
-
-
 
                     }
 

@@ -5,10 +5,12 @@
 }
 @model ShopYB.Models.LoginViewModel
 
+    <hr class="soft" />
 
-    <div class="" style="background-color:white;text-align:justify;padding:10px 20px">
 
-        <div class="box" style="box-shadow:0px 0px">
+    <div class="" style="background-color:white;text-align:justify;padding:10px 20px" dir="rtl">
+
+        <div class="box" style="box-shadow:0px 0px;display:flex;justify-content:center;margin-bottom:40px">
             <div class="row">
                 <div class="box-header">
                     <h3> ورود</h3>
@@ -25,30 +27,31 @@
                     </p>
                 </div>
             }
-            <form class="form-horizontal" asp-controller="customer" asp-action="login" method="get">
-                <h4>اطلاعات حساب کاربری</h4>
-                
-                <div class="control-group row" style="padding:10px">
-                    <label class="control-label col-md-2" for="username">نام کاربری <sup>*</sup></label>
-                    <div class="controls">
-                        <input type="text" class="form-control col-md-10"asp-for="UserName" required="required" placeholder="نام کاربری">
-                    </div>
-                </div>
-                <div class="control-group row"  style="padding:10px">
-                    <label class="control-label col-md-2" for="inputPassword1">رمز عبور <sup>*</sup></label>
-                    <div class="controls">
-                        <input type="password" class="form-control col-md-10" asp-for="Password" required="required" placeholder="رمز عبور" >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-lg-offset-3" style="text-align:end">
+            <div class="" style="display:flex;justify-content:center">
+                <form class="form-horizontal" asp-controller="customer" asp-action="login" method="get" style="text-align:center">
+                    <h4>اطلاعات حساب کاربری</h4>
 
-                        <input type="submit" value="ورود" class="btn btn-large btn-success" />
-                        <a asp-controller="customer" class="btn btn-danger" asp-action="register">ثبت نام</a>
+                    <div class="control-group row " style="padding:10px;margin-top:20px">
+                        <label class="control-label col-4 " for="username">نام کاربری<sup>*</sup></label>
+                        <div class="controls col-8">
+                            <input type="text" class="form-control" style="padding-left:150px" asp-for="UserName" required="required" placeholder="نام کاربری">
+                        </div>
                     </div>
-                    
-                </div>
-            </form>
+                    <div class="control-group row" style="padding:10px">
+                        <label class="control-label col-4" for="inputPassword1">رمز عبور<sup>*</sup></label>
+                        <div class="controls col-8">
+                            <input type="password" class="form-control" asp-for="Password" required="required" placeholder="رمز عبور">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-offset-3" style="text-align:end">
+                            <input type="submit" value="ورود" class="btn btn-large btn-success" />
+                            <a asp-controller="customer" class="btn btn-danger" asp-action="register">ثبت نام</a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
         </div>
 
 

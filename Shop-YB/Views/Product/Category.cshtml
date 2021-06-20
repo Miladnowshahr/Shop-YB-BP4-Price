@@ -1,157 +1,140 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    int catId;
+    var categories = (IEnumerable<Category>)ViewBag.Categories;
 }
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 
-@{
-    int catId;
-}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<hr class="soft" />
 
-<div class="" style="background-color:white;padding-top:10px">
-    <div class="row">
+<div class="row" style="background-color:white;padding-top:10px;" dir="rtl">
 
-        <div class="col-lg-6">
-
-            <form class="form-horizontal" id="frmOrder" asp-controller="product" asp-action="category" asp-route-categoryId="@(ViewBag.Category!=null? ViewBag.Category.Id:"" )">
-                <div class="control-group">
-                    <label style="" class="control-label col-lg-4 pull-right">مرتب سازی   </label>
-
-                    <select id="optOrder" name="order" class="col-lg-8 form-control">
-                        <option value="1" selected="@(ViewBag.Order==1)"> حروف الفبا صعودی</option>
-                        <option value="2" selected="@(ViewBag.Order==2)"> حروف الفبا نزولی</option>
-                        <option value="3" selected="@(ViewBag.Order==3)">جدیدترین  محصولات(پیشفرض)</option>
-                        <option value="4" selected="@(ViewBag.Order==4)">قیمت صعودی</option>
-                        <option value="5" selected="@(ViewBag.Order==5)">قیمت نزولی</option>
-                        <option value="6" selected="@(ViewBag.Order==6)">محبوبیت</option>
-
-                    </select>
-
-                </div>
-            </form>
-
+    <div class="col-lg-3 col-sm-12 col-md-2">
+        <div class="hero__categories" style="margin-right:15px">
+            <div class="hero__categories__all" style="text-align:right">
+                <i class="fa fa-bars"></i>
+                <span>محصولات گیلان</span>
+            </div>
+            <ul>
+                @foreach (var category in categories)
+                {
+                    <li><a asp-action="Category" asp-controller="Product" asp-route-categoryId="@category.Id">@category.Name</a></li>
+                }
+            </ul>
         </div>
+    </div>
+    <div class="col-lg-9 col-sm-12 col-xs-12 col-md-10" style="border-right: 1px solid #d3cece;">
 
-        <div style="margin-right: -20px;" class="col-lg-6">
-            <h5 >
+        <div class="header">
+            <div class="row" dir="rtl">
+                <div class="col-6">
+                    <form class="form-horizontal" id="frmOrder" asp-controller="product" asp-action="category" asp-route-categoryId="@(ViewBag.Category!=null? ViewBag.Category.Id:"" )">
+                        <div class="control-group" style="display:flex!important;justify-content:center;">
+                            <label style="line-height:2" class="control-label col-3 pull-right">مرتب سازی </label>
+                            <select id="optOrder" name="order" class="col-6" style="display:flex!important;text-align:right;justify-content:start">
+                                <option value="1" selected="@(ViewBag.Order==1)"> حروف الفبا صعودی</option>
+                                <option value="2" selected="@(ViewBag.Order==2)"> حروف الفبا نزولی</option>
+                                <option value="3" style="text-align:center" selected="@(ViewBag.Order==3)">جدیدترین  محصولات(پیشفرض)</option>
+                                <option value="4" selected="@(ViewBag.Order==4)">قیمت صعودی</option>
+                                <option value="5" selected="@(ViewBag.Order==5)">قیمت نزولی</option>
+                                <option value="6" selected="@(ViewBag.Order==6)">محبوبیت</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div style="display:flex;justify-content:center" class="col-4">
+                    <h5>
+                        @if (ViewBag.Category != null)
+                        {
+                            @ViewBag.Category.Name;
+                            catId = ViewBag.Category.Id;
+                        }
+                        <small class=""> @ViewBag.CountProduct محصول </small>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="" style="list-style:none; display:flex;justify-content:flex-start;flex-wrap:wrap;margin-top:20px;">
+                @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
+                {
+                    var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
+                    <div class="col-lg-3 box" style="height:380px;margin-left:10px;">
+                        <div class="thumbnail" style="text-align:center">
+                            <a asp-action="details" asp-route-id="@product.Id" asp-controller="product">
+                                <img src="~/products/@image" style="width:240px;height:190px" alt="" />
+                            </a>
+                            <div class="caption" style="padding-top:10px;height:70px;">
+                                <div style="text-orientation:mixed;writing-mode:vertical-rl;float:left;display:flex;flex-direction:row-reverse">
+                                    <i class="fa fa-star checked"></i>
+                                    <i class="fa fa-star checked"></i>
+                                    <i class="fa fa-star checked"></i>
+                                    <i class="fa fa-star checked"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <h5 style="height:50px;display:flex;justify-content:center;font-family:'B Yekan+'">@product.Name</h5>
+                                
+                                
+                                <h6 style="height:40px;display:flex;justify-content:center;color:#de1e1e;font-size:x-large;font-family:'B Yekan'"><span>@product.Price.ToString("#,##")</span><span style="font-size:xx-small"> ريال </span></h6>
+
+                                @*<p> @product.Description </p>*@
+                                <h4 style="text-align:center">
+                                    @*<a class="btn" href="product_details.html">
+                <i class="icon-zoom-in"></i>
+            </a>*@
+                                    <a class="btn btn-success" onclick="buy(@product.Id)" @*asp-controller="cart" asp-action="buy" asp-route-id="@product.Id"*@ style="background-color:#7fad39;width:70%;color:#fff;border-color:#fff">
+                                        <i class="fa fa-shopping-cart" style="margin-left:5px;font-size:large;background-color:#7fad39;color:#fff"></i>اضافه سبد خرید
+                                    </a>
+                                    @*<a class="btn btn-danger" href="#">@product.Price.ToString("#,##") ریال</a>*@
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="row" style="justify-content: center;margin-top:30px">
+
                 @if (ViewBag.Category != null)
                 {
-                    @ViewBag.Category.Name;
-                    catId = ViewBag.Category.Id;
+                    @Html.PagedListPager((IPagedList)ViewBag.Products,
+                                        page => Url.Action("category", "product", new { page = page, categoryId = ViewBag.Category.Id }),
+                                                 new X.PagedList.Web.Common.PagedListRenderOptionsBase
+                                                 {
+                                                     LinkToFirstPageFormat = "<< صفحه نخست",
+                                                     LinkToPreviousPageFormat = "< قبلی",
+                                                     LinkToNextPageFormat = "بعدی >",
+                                                     LinkToLastPageFormat = "&Uacute;صفحه آخر >>",
+                                                     LiElementClasses = new string[] { "page-item" },
+                                                     PageClasses = new string[] { "page-link" }
+                                                 })
                 }
-                <small class=""> @ViewBag.CountProduct محصول </small>
-            </h5>
+                else
+                {
+                    @Html.PagedListPager((IPagedList)ViewBag.Products,
+                                        page => Url.Action("category", "product", new { page = page }),
+                                            new X.PagedList.Web.Common.PagedListRenderOptionsBase
+                                            {
+                                                LinkToFirstPageFormat = "<< صفحه نخست",
+                                                LinkToPreviousPageFormat = "< قبلی",
+                                                LinkToNextPageFormat = "بعدی >",
+                                                LinkToLastPageFormat = "&Uacute;صفحه آخر >>",
+                                                LiElementClasses = new string[] { "page-item" },
+                                                PageClasses = new string[] { "page-link" }
+                                            })
+                }
+            </div>
         </div>
     </div>
-
-
-    <hr class="soft" />
-
-
-
-
-
-
-    @*<div id="myTab" class="pull-right">
-            <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
-            <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
-        </div>*@
-
-    <br class="clr" />
-
-
-    @*<div class="tab-pane" id="listView">
-
-            @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
-            {
-                var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
-
-
-                    <a asp-action="details" asp-route-id="@product.Id" asp-controller="product">
-
-                        <div class="col-lg-2">
-                            <img src="~/products/@image" alt="" />
-                        </div>
-                        <div class="span4">
-
-                            <h4>@product.Name </h4>
-                            <p>
-                                    @product.Description
-                                </p>
-                            <br class="clr" />
-                        </div>
-                    </a>
-                    <div class="col-lg-3 alignR">
-                        <form class="form-horizontal qtyFrm">
-                            <h3>@product.Price.ToString("#,##") ریال</h3>
-                            <label class="checkbox">
-                                    <input type="checkbox">  اضافه به مقایسه
-                                </label><br />
-
-                            <a asp-controller="cart" asp-action="buy" asp-route-id="@product.Id" class="btn btn-large btn-success"> خرید <i class=" icon-shopping-cart"></i></a>
-
-                        </form>
-                    </div>
-                <hr class="soft" />
-            }
-        </div>*@
-
-    <div class="tab-pane  active" id="blockView">
-        <div class="row" style="list-style:none; margin-left: 10px; margin-right: 10px;">
-
-            @foreach (var product in (IEnumerable<ShopYB.Models.Product>)ViewBag.Products)
-            {
-                var image = product.Photos.SingleOrDefault(p => p.Featured).Name;
-
-                <div class="col-lg-3 box" style="height:330px;border:0.2px solid #808080;">
-                    <div class="thumbnail">
-                        <a asp-action="details" asp-route-id="@product.Id" asp-controller="product">
-                            <img src="~/products/@image" style="width:240px;height:190px" alt="" />
-                        </a>
-                        <div class="caption" style="padding-top:10px;height:70px;">
-                            <h5 style="height:50px">@product.Name</h5>
-                            @*<p>
-                                    @product.Description
-                                </p>*@
-                            <h4 style="text-align:center" style="padding-top:10px;">
-                                @*<a class="btn" href="product_details.html">
-                                        <i class="icon-zoom-in"></i>
-                                    </a>*@
-                                <a class="btn btn-success" asp-controller="cart" asp-action="buy" asp-route-id="@product.Id">
-                                    <i class="fa fa-shopping-cart"></i>خرید
-
-                                </a>
-                                <a class="btn btn-danger" href="#">@product.Price.ToString("#,##")</a>
-                            </h4>
-
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-        <hr class="soft" />
-    </div>
-
-
-
-    @*<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>*@
-<div class="row" style="justify-content: center;">
-    @if (ViewBag.Category != null)
-    {
-        @Html.PagedListPager((IPagedList)ViewBag.Products, page => Url.Action("category", "product", new { page = page, categoryId = ViewBag.Category.Id }))
-    }
-    else
-    {
-        @Html.PagedListPager((IPagedList)ViewBag.Products, page => Url.Action("category", "product", new { page = page }))
-
-    }
-
 </div>
+@*<div class="row" style="list-style:none; margin-left: 10px; margin-right: 10px;">
+    </div>*@
 
-</div>
+<br class="clr" />
+
 <br class="clr" />
 <script src="~/user/themes/js/jquery.js"></script>
 <script>
@@ -159,4 +142,30 @@
         $("#frmOrder").submit();
 
     });
+
+    function buy(pid) {
+        $.ajax({
+            url: "@Url.Action("buyJson", "cart")",
+            type: "POST",
+            data: {
+                id: pid
+
+            },
+            success: function (response) {
+                //location.reload();
+                console.log(response);
+                console.log(response);
+                $("#totalPrice").html(response.sum);
+                $("#totalPriceTable").html(response.sum);
+                $("#countOfPrice").html(response.count);
+
+                localStorage.setItem("countofPrice", response.count);
+                localStorage.setItem("totalPrice", response.sum);
+
+            }
+
+        });
+    }
+
+   
 </script>

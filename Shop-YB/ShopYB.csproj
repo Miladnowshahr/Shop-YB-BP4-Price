@@ -1960,6 +1960,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\SlideShows\" />
     <Folder Include="Areas\Admin\Views\Dashboard\" />
     <Folder Include="wwwroot\user\themes\less\oregional\" />

@@ -1,23 +1,35 @@
 ﻿
 
-
-<div id="slideShowCarousel" class="carousel slide carousel-fade boxShadow " data-ride="carousel" >
+<div id="slideShowCarousel" class="carousel slide carousel-fade boxShadow" data-ride="carousel" >
     <div class="carousel-inner">
         @{
             var index = 0;
 
-            foreach (var slide in Model)
+            foreach (var slide in (IEnumerable<SlideShow>)Model)
             {
-            <div class="carousel-item @(index == 0 ? "active" : "")">
-                
+
+
+                <div class="carousel-item @(index == 0 ? "active" : "") hero__item set-bg" data-setbg="SlideShows/@slide.Name">
+                    <div class="hero__text">
+                        <span>خرید بی واسطه</span>
+
+                        @*<span>خرید</span><span> @slide.Title </span><span>بی واسطه</span>*@
+                        <h2>طبیعی %100</h2>
+                        <p>ارسال به سراسر ایران</p>
+                        <a href="#" class="primary-btn">همین الان خرید کنید</a>
+                    </div>
+                </div>
+
+                @*<div class="carousel-item @(index == 0 ? "active" : "")">
+
                     <a asp-action="index">
                         <img style="width:100%;height:100%" src="~/SlideShows/@slide.Name" alt="special offers" />
                     </a>
 
-            </div>
-                    index++;
-                }
+                </div>*@
+                index++;
             }
+        }
 
     </div>
     <a class="carousel-control-prev" href="#slideShowCarousel" role="button" data-slide="prev">
